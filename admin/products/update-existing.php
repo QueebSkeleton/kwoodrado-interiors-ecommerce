@@ -85,6 +85,7 @@
               <div class="form-group">
                 <label for="category_id">Category</label>
                 <select name="category_id" class="form-control" id="category_id">
+                  <option value="0">None</option>
                   <?php
                     // Get all categories
                     $categories_result = mysqli_query($conn, "SELECT id, name FROM product_category");

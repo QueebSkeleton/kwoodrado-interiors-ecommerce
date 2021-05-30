@@ -1,7 +1,6 @@
 <?php
 
   // Only allow POST requests
-  // TODO: Add error-handling mechanism
   if($_SERVER["REQUEST_METHOD"] != "POST") {
     header("Status: 405 Method Not Allowed");
     die("Only POST requests are allowed.");
@@ -10,7 +9,7 @@
   // Get product details from request parameters
   $id = $_POST["id"];
   $name = $_POST["name"];
-  $category_id = $_POST["category_id"];
+  $category_id = $_POST["category_id"] != "0" ? $_POST["category_id"] : NULL;
   $description = $_POST["description"];
   $is_enabled = $_POST["is_enabled"];
   // TODO: Add functionality for images
@@ -20,6 +19,8 @@
   $unit_price = $_POST["unit_price"];
   $compare_to_price = $_POST["compare_to_price"];
   $is_taxable = isset($_POST["is_taxable"]) ? 1 : 0;
+
+  // TODO: Add validation layer
 
   // Parse config.ini file then get db credentials
   $config = parse_ini_file("../../../config.ini");

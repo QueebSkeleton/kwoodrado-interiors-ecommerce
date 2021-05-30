@@ -9,7 +9,7 @@
 
   // Get product details from request parameters
   $name = $_POST["name"];
-  $category_id = $_POST["category_id"];
+  $category_id = $_POST["category_id"] != "0" ? $_POST["category_id"] : NULL;
   $description = $_POST["description"];
   $is_enabled = $_POST["is_enabled"];
   // TODO: Add functionality for images
@@ -19,6 +19,8 @@
   $unit_price = $_POST["unit_price"];
   $compare_to_price = $_POST["compare_to_price"];
   $is_taxable = isset($_POST["is_taxable"]) ? 1 : 0;
+
+  // TODO: Add validation layer
 
   // Parse config.ini file then get db credentials
   $config = parse_ini_file("../../../config.ini");
