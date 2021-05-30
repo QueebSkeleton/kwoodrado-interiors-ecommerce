@@ -96,9 +96,11 @@
                       <a href="update-existing.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-primary">
                         <i class="fas fa-edit"></i> Update
                       </a>
-                      <button class="btn btn-sm btn-danger">
+                      <a href="actions/delete-product.php?id=<?= $row["id"] ?>"
+                        class="btn btn-sm btn-danger btn-delete-product"
+                        onclick="return confirm('Proceed to delete product named: <?= $row["name"] ?>?');">
                         <i class="fas fa-trash"></i> Delete
-                      </button>
+                      </a>
                     </div>
                   </td>
                 </tr>
