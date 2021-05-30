@@ -93,9 +93,9 @@
                     <?php endif; ?>
                   <td>
                     <div class="btn-group">
-                      <button class="btn btn-sm btn-primary">
+                      <a href="update-existing.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-primary">
                         <i class="fas fa-edit"></i> Update
-                      </button>
+                      </a>
                       <button class="btn btn-sm btn-danger">
                         <i class="fas fa-trash"></i> Delete
                       </button>
