@@ -8,7 +8,7 @@
   }
 
   // Get category details from request parameters
-  // TODO: add functionality for thumbnail
+  $id = $_POST["id"];
   $name = $_POST["name"];
   $parent_category_id = $_POST["parent_category_id"] != "0" ? $_POST["parent_category_id"] : NULL;
   $description = $_POST["description"];
@@ -19,17 +19,18 @@
   // Get connection
   $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
 
-  // Prepare insert statement
-  $insert_stmt = mysqli_prepare($conn, "INSERT INTO `product_category`(`name`, `description`, `parent_category_id`) VALUES (?, ?, ?)");
+  // Prepare update statement
+  $update_stmt = mysqli_prepare($conn, "UPDATE `product_category` SET `name`=?,".
+    "`description`=?,`parent_category_id`=? WHERE `id`=?");
 
   // Bind the category values
-  mysqli_stmt_bind_param($insert_stmt, "ssi", $name, $description, $parent_category_id);
+  mysqli_stmt_bind_param($update_stmt, "ssii", $name, $description, $parent_category_id, $id);
 
-  // Execute insert statement
-  mysqli_stmt_execute($insert_stmt);
+  // Execute update statement
+  mysqli_stmt_execute($update_stmt);
 
   // Close all
-  mysqli_stmt_close($insert_stmt);
+  mysqli_stmt_close($update_stmt);
   mysqli_close($conn);
 
   // TODO: add error cases
