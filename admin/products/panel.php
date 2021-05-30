@@ -14,8 +14,6 @@
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-  
-  <?php include("../include/preloader.php"); ?>
 
   <!-- Navbar -->
   <?php include("../include/navbar.php"); ?>
