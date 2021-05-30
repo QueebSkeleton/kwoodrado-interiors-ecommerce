@@ -34,8 +34,9 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">General Form</li>
+              <li class="breadcrumb-item"><a href="../dashboard.php">Home</a></li>
+              <li class="breadcrumb-item"><a href="panel.php">Products</a></li>
+              <li class="breadcrumb-item active">Add</li>
             </ol>
           </div>
         </div>
@@ -58,8 +59,22 @@
                 <input type="text" name="name" class="form-control" id="name" placeholder="Enter name">
               </div>
               <div class="form-group">
-                <label for="category.id">Category</label>
-                <select name="category.id" class="form-control" id="category.id"></select>
+                <label for="category_id">Category</label>
+                <select name="category_id" class="form-control" id="category_id">
+                  <?php
+                    // Get all categories from database then output as option tags
+                    // Parse config.ini file then get db credentials
+                    $config = parse_ini_file("../../config.ini");
+                    // Create connection to db
+                    $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
+                    // Get all categories
+                    $categories_result = mysqli_query($conn, "SELECT id, name FROM product_category");
+
+                    while($row = mysqli_fetch_assoc($categories_result)):
+                  ?>
+                  <option value="<?= $row["id"] ?>"><?= $row["name"] ?></option>
+                  <?php endwhile; mysqli_close($conn); ?>
+                </select>
               </div>
               <div class="form-group">
                 <label for="description">Description</label>
@@ -95,15 +110,11 @@
               </div>
               <div class="form-group">
                 <label for="cost_per_item">Cost per item</label>
-                <input type="number" step="any" name="unit_price" class="form-control" id="cost_per_item" placeholder="Enter initial costs for this item">
+                <input type="number" step="any" name="cost_per_item" class="form-control" id="cost_per_item" placeholder="Enter initial costs for this item">
               </div>
               <div class="form-group">
                 <label for="unit_price">Unit Price</label>
                 <input type="number" name="unit_price" class="form-control" id="unit_price" placeholder="Enter unit price">
-              </div>
-              <div class="form-group">
-                <label for="compare_to_price">Compare To Price</label>
-                <input type="number" name="compare_to_price" class="form-control" id="compare_to_price" placeholder="Enter price to compare to">
               </div>
               <div class="form-group">
                 <label for="compare_to_price">Compare To Price</label>
