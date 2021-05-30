@@ -18,7 +18,7 @@
   $cost_per_item = $_POST["cost_per_item"];
   $unit_price = $_POST["unit_price"];
   $compare_to_price = $_POST["compare_to_price"];
-  $is_taxable = isset($_POST["is_taxable"]) ? $_POST["is_taxable"] : 0;
+  $is_taxable = isset($_POST["is_taxable"]) ? 1 : 0;
 
   // Parse config.ini file then get db credentials
   $config = parse_ini_file("../../../config.ini");
