@@ -62,7 +62,7 @@
           </div>
           <!-- /.card-header -->
           <?php
-            $config = parse_ini_file("../../config.ini");
+            $config = parse_ini_file("../../../config.ini");
 
             $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
 
