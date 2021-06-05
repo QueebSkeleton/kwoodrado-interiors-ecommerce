@@ -42,10 +42,51 @@
         </li>
         <!-- Orders -->
         <li class="nav-item">
-          <a href="/admin/orders/panel.php" class="nav-link">
+          <a href="#" class="nav-link">
             <i class="nav-icon fas fa-shopping-cart"></i>
-            <p>Orders</p>
+            <p>
+              Orders
+              <i class="fas fa-angle-left right"></i>
+            </p>
           </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="all-orders.php" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>All</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="new-orders.php" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>New</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="processing-orders.php" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Processing</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="delivered-orders.php" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Delivered</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="denied-orders.php" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Denied</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="cancelled-orders.php" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Cancelled</p>
+              </a>
+            </li>
+          </ul>
         </li>
         <!-- Customers -->
         <li class="nav-item">
