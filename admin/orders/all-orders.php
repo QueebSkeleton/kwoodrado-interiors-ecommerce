@@ -93,6 +93,9 @@
                   <td><?= $row["status"] ?></td>
                   <td>
                     <div class="btn-group">
+                      <a href="view.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-info">
+                        <i class="fas fa-eye"></i> View
+                      </a>
                       <a href="update-existing.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-primary">
                         <i class="fas fa-edit"></i> Update
                       </a>
