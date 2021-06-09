@@ -9,7 +9,7 @@
 
   // Get product details from request parameters
   $name = $_POST["name"];
-  $category_id = $_POST["category_id"] != "0" ? $_POST["category_id"] : NULL;
+  $category_name = $_POST["category_name"] != "" ? $_POST["category_name"] : NULL;
   $description = $_POST["description"];
   $is_enabled = $_POST["is_enabled"];
   // TODO: Add functionality for images
@@ -29,11 +29,11 @@
   $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
 
   // Prepare insert statement
-  $insert_stmt = mysqli_prepare($conn, "INSERT INTO `product`(`category_id`, `name`, `description`, `is_taxable`,".
+  $insert_stmt = mysqli_prepare($conn, "INSERT INTO `product`(`category_name`, `name`, `description`, `is_taxable`,".
    "`cost_per_item`, `unit_price`, `compare_to_price`, `stock_keeping_unit`, `units_in_stock`, `is_enabled`) VALUES (?,?,?,?,?,?,?,?,?,?)");
 
   // Bind the product values
-  mysqli_stmt_bind_param($insert_stmt, "issidddsii", $category_id, $name, $description, $is_taxable,
+  mysqli_stmt_bind_param($insert_stmt, "sssidddsii", $category_name, $name, $description, $is_taxable,
     $cost_per_item, $unit_price, $compare_to_price, $stock_keeping_unit, $units_in_stock,
     $is_enabled);
 

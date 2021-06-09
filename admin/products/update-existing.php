@@ -83,16 +83,16 @@
                 <input type="text" name="name" class="form-control" id="name" placeholder="Enter name" value="<?= $product_row["name"] ?>">
               </div>
               <div class="form-group">
-                <label for="category_id">Category</label>
-                <select name="category_id" class="form-control" id="category_id">
-                  <option value="0">None</option>
+                <label for="category_name">Category</label>
+                <select name="category_name" class="form-control" id="category_name">
+                  <option value="">None</option>
                   <?php
                     // Get all categories
-                    $categories_result = mysqli_query($conn, "SELECT id, name FROM product_category");
+                    $categories_result = mysqli_query($conn, "SELECT name FROM product_category");
 
                     while($row = mysqli_fetch_assoc($categories_result)):
                   ?>
-                  <option value="<?= $row["id"] ?>"<?= $row["id"] == $product_row["category_id"] ? "selected" : "" ?>><?= $row["name"] ?></option>
+                  <option value="<?= $row["name"] ?>"<?= $row["name"] == $product_row["category_name"] ? "selected" : "" ?>><?= $row["name"] ?></option>
                   <?php endwhile; ?>
                 </select>
               </div>

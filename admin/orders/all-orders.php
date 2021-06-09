@@ -71,7 +71,7 @@
             // Retrieve orders
             $orders_result = mysqli_query($conn, "SELECT placed_order.id, customer.first_name, customer.".
               "last_name, placed_order.placed_in, placed_order.status FROM placed_order ".
-              "LEFT JOIN customer ON customer.id = placed_order.customer_id");
+              "LEFT JOIN customer ON customer.email_address = placed_order.customer_email_address");
           ?>
           <div class="card-body table-responsive p-0">
             <table class="table table-hover text-nowrap">
@@ -85,7 +85,9 @@
                 </tr>
               </thead>
               <tbody>
-                <?php while($row = mysqli_fetch_assoc($orders_result)): ?>
+                <?php 
+                  if(mysqli_num_rows($orders_result) > 0):
+                    while($row = mysqli_fetch_assoc($orders_result)): ?>
                 <tr>
                   <td><?= $row["id"] ?></td>
                   <td><?= $row["first_name"]." ".$row["last_name"] ?></td>
@@ -107,7 +109,13 @@
                     </div>
                   </td>
                 </tr>
-                <?php endwhile; ?>
+                <?php
+                  endwhile;
+                  else: ?>
+                <tr>
+                  <td colspan="5" class="text-center">There are no orders as of the moment.</td>
+                </tr>
+                <?php endif; ?>
               </tbody>
             </table>
           </div>

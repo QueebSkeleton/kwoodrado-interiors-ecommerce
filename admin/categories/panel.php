@@ -69,13 +69,12 @@
             $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
 
             // Retrieve categories
-            $categories_result = mysqli_query($conn, "SELECT id, name FROM product_category");
+            $categories_result = mysqli_query($conn, "SELECT name FROM product_category");
           ?>
           <div class="card-body table-responsive p-0">
             <table class="table table-hover text-nowrap">
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>Category</th>
                   <th>Thumbnail</th>
                   <th>Actions</th>
@@ -84,15 +83,14 @@
               <tbody>
                 <?php while($row = mysqli_fetch_assoc($categories_result)): ?>
                 <tr>
-                  <td><?= $row["id"] ?></td>
                   <td><?= $row["name"] ?></td>
                   <td></td>
                   <td>
                     <div class="btn-group">
-                      <a href="update-existing.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-primary">
+                      <a href="update-existing.php?name=<?= $row["name"] ?>" class="btn btn-sm btn-primary">
                         <i class="fas fa-edit"></i> Update
                       </a>
-                      <a href="actions/delete-category.php?id=<?= $row["id"] ?>"
+                      <a href="actions/delete-category.php?name=<?= $row["name"] ?>"
                         class="btn btn-sm btn-danger"
                         onclick="return confirm('Proceed to delete category named: <?= $row["name"] ?>?');">
                         <i class="fas fa-trash"></i> Delete

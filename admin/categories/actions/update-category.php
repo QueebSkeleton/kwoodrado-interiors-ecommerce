@@ -8,9 +8,9 @@
   }
 
   // Get category details from request parameters
-  $id = $_POST["id"];
+  $current_name = $_POST["current_name"];
   $name = $_POST["name"];
-  $parent_category_id = $_POST["parent_category_id"] != "0" ? $_POST["parent_category_id"] : NULL;
+  $parent_category_name = $_POST["parent_category_name"] != "" ? $_POST["parent_category_name"] : NULL;
   $description = $_POST["description"];
 
   // Parse config.ini file then get db credentials
@@ -21,10 +21,10 @@
 
   // Prepare update statement
   $update_stmt = mysqli_prepare($conn, "UPDATE `product_category` SET `name`=?,".
-    "`description`=?,`parent_category_id`=? WHERE `id`=?");
+    "`description`=?,`parent_category_name`=? WHERE `name`=?");
 
   // Bind the category values
-  mysqli_stmt_bind_param($update_stmt, "ssii", $name, $description, $parent_category_id, $id);
+  mysqli_stmt_bind_param($update_stmt, "ssss", $name, $description, $parent_category_name, $current_name);
 
   // Execute update statement
   mysqli_stmt_execute($update_stmt);

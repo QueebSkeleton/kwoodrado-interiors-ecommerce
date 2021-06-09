@@ -55,10 +55,10 @@
             $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
 
             // Prepare category select statement
-            $select_stmt = mysqli_prepare($conn, "SELECT * FROM product_category WHERE id = ?");
+            $select_stmt = mysqli_prepare($conn, "SELECT * FROM product_category WHERE name = ?");
 
-            // Bind category id
-            mysqli_stmt_bind_param($select_stmt, "i", $_GET["id"]);
+            // Bind category name
+            mysqli_stmt_bind_param($select_stmt, "s", $_GET["name"]);
 
             // Execute select statement
             mysqli_stmt_execute($select_stmt);
@@ -78,21 +78,21 @@
             </div>
             <div class="card-body">
               <div class="form-group">
+                <input type="hidden" name="current_name" value="<?= $category_row["name"] ?>">
                 <label for="name">Name</label>
-                <input type="hidden" name="id" value="<?= $category_row["id"] ?>">
                 <input type="text" name="name" class="form-control" id="name" placeholder="Enter name" value="<?= $category_row["name"] ?>">
               </div>
               <div class="form-group">
-                <label for="parent_category_id">Parent Category</label>
-                <select name="parent_category_id" class="form-control" id="parent_category_id">
-                  <option value="0"<?= empty($category_row["parent_category_id"]) ? "selected" : "" ?>>None</option>
+                <label for="parent_category_name">Parent Category</label>
+                <select name="parent_category_name" class="form-control" id="parent_category_name">
+                  <option value=""<?= empty($category_row["parent_category_name"]) ? "selected" : "" ?>>None</option>
                   <?php
                     // Get all categories
-                    $categories_result = mysqli_query($conn, "SELECT id, name FROM product_category");
+                    $categories_result = mysqli_query($conn, "SELECT name FROM product_category");
 
                     while($row = mysqli_fetch_assoc($categories_result)):
                   ?>
-                  <option value="<?= $row["id"] ?>"<?= $category_row["parent_category_id"] == $row["id"] ? "selected" : "" ?>><?= $row["name"] ?></option>
+                  <option value="<?= $row["name"] ?>"<?= $category_row["parent_category_name"] == $row["name"] ? "selected" : "" ?>><?= $row["name"] ?></option>
                   <?php endwhile; ?>
                 </select>
               </div>

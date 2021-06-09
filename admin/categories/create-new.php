@@ -63,9 +63,9 @@
                 <input type="file" name="thumbnail" class="form-control" id="thumbnail">
               </div>
               <div class="form-group">
-                <label for="parent_category_id">Parent Category</label>
-                <select name="parent_category_id" class="form-control" id="parent_category_id">
-                  <option value="0">None</option>
+                <label for="parent_category_name">Parent Category</label>
+                <select name="parent_category_name" class="form-control" id="parent_category_name">
+                  <option value="">None</option>
                   <?php
                     // Get all categories from database then output as option tags
                     // Parse config.ini file then get db credentials
@@ -73,11 +73,11 @@
                     // Create connection to db
                     $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
                     // Get all categories
-                    $categories_result = mysqli_query($conn, "SELECT id, name FROM product_category");
+                    $categories_result = mysqli_query($conn, "SELECT name FROM product_category");
 
                     while($row = mysqli_fetch_assoc($categories_result)):
                   ?>
-                  <option value="<?= $row["id"] ?>"><?= $row["name"] ?></option>
+                  <option value="<?= $row["name"] ?>"><?= $row["name"] ?></option>
                   <?php endwhile; mysqli_close($conn); ?>
                 </select>
               </div>

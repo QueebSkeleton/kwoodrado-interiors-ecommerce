@@ -49,7 +49,7 @@
   $order_result = mysqli_query($conn, "SELECT customer.first_name, customer.last_name, customer.phone_number,".
     " customer.email_address, placed_order.billing_address, placed_order.shipping_address, placed_order.additional_notes,".
     " placed_order.status, product.name, product.is_taxable, placed_order_item.quantity, placed_order_item.final_unit_price".
-    " FROM placed_order LEFT JOIN customer ON customer.id = placed_order.customer_id".
+    " FROM placed_order LEFT JOIN customer ON customer.email_address = placed_order.customer_email_address".
     " LEFT JOIN placed_order_item ON placed_order_item.order_id = placed_order.id".
     " LEFT JOIN product ON product.id = placed_order_item.product_id WHERE placed_order.id = ".$_GET["id"]);
 
