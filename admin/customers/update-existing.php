@@ -30,13 +30,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Create a Customer</h1>
+            <h1>Update a Customer</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="../dashboard.php">Home</a></li>
               <li class="breadcrumb-item"><a href="panel.php">Customers</a></li>
-              <li class="breadcrumb-item active">Add</li>
+              <li class="breadcrumb-item active">Update</li>
             </ol>
           </div>
         </div>
@@ -47,7 +47,30 @@
     <section class="content">
       <div class="container-fluid">
 
-        <form method="POST" action="actions/create-customer.php">
+        <?php
+            // Parse config file, get db credentials
+            $config = parse_ini_file("../../../config.ini");
+
+            // Create connection to database
+            $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
+
+            // Prepare category select statement
+            $select_stmt = mysqli_prepare($conn, "SELECT * FROM customer WHERE email_address = ?");
+
+            // Bind category name
+            mysqli_stmt_bind_param($select_stmt, "s", $_GET["email_address"]);
+
+            // Execute select statement
+            mysqli_stmt_execute($select_stmt);
+
+            // Fetch the customer
+            $customer_result = mysqli_stmt_get_result($select_stmt);
+
+            // Get customer row
+            $customer_row = mysqli_fetch_assoc($customer_result);
+        ?>
+
+        <form method="POST" action="actions/update-customer.php">
           <!-- Details card -->
           <div class="card">
             <div class="card-header">
@@ -56,19 +79,20 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="first_name">First Name</label>
-                <input type="text" name="first_name" class="form-control" id="first_name" placeholder="Enter first name" required>
+                <input type="text" name="first_name" class="form-control" id="first_name" placeholder="Enter first name" value="<?= $customer_row["first_name"] ?>" required>
               </div>
               <div class="form-group">
                 <label for="last_name">Last Name</label>
-                <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Enter last name" required>
+                <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Enter last name" value="<?= $customer_row["last_name"] ?>" required>
               </div>
               <div class="form-group">
                 <label for="phone_number">Contact Number</label>
-                <input type="text" name="phone_number" class="form-control" id="phone_number" placeholder="Enter 11-digit phone number" required>
+                <input type="text" name="phone_number" class="form-control" id="phone_number" placeholder="Enter 11-digit phone number" value="<?= $customer_row["phone_number"] ?>" required>
               </div>
               <div class="form-group">
                 <label for="email_address">Email Address</label>
-                <input type="email" name="email_address" class="form-control" id="email_address" placeholder="Enter email address" required>
+                <input type="hidden" name="current_email_address" value="<?= $customer_row["email_address"] ?>">
+                <input type="email" name="email_address" class="form-control" id="email_address" placeholder="Enter email address" value="<?= $customer_row["email_address"] ?>" required>
               </div>
               <div class="form-group">
                 <label for="password">Password</label>
