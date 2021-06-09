@@ -94,7 +94,7 @@
                   <td><?= $row["status"] ?></td>
                   <td>
                     <div class="btn-group">
-                      <a href="view-order.php" class="btn btn-sm btn-primary">
+                      <a href="view.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-info">
                         <i class="fas fa-eye"></i> View
                       </a>
                       <a href="order-invoice.php" class="btn btn-sm btn-warning">

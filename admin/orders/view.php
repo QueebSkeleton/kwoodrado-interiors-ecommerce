@@ -172,6 +172,29 @@
       <div class="container-fluid">
         <!-- Order Details Card -->
         <div class="card">
+          <div class="ribbon-wrapper ribbon-lg">
+            <?php if($placed_order -> status == "NEW"): ?>
+            <div class="ribbon bg-primary text-lg">
+              New Order
+            </div>
+            <?php elseif($placed_order -> status == "PROCESSING"): ?>
+            <div class="ribbon bg-info text-lg">
+              Processing
+            </div>
+            <?php elseif($placed_order -> status == "DELIVERED"): ?>
+            <div class="ribbon bg-success text-lg">
+              Delivered
+            </div>
+            <?php elseif($placed_order -> status == "DENIED"): ?>
+            <div class="ribbon bg-danger text-lg">
+              Denied
+            </div>
+            <?php elseif($placed_order -> status == "CANCELLED"): ?>
+            <div class="ribbon bg-warning text-lg">
+              Cancelled
+            </div>
+            <?php endif; ?>
+          </div>
           <div class="card-header">
             <h3 class="card-title">
               <i class="fas fa-table"></i>
@@ -206,22 +229,16 @@
                   <input type="text" class="form-control" id="phone_number" value="<?= $placed_order -> customer_phone_number ?>" readonly>
                 </div>
               </div>
-              <div class="col-md-5">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label for="billing_address">Billing Address:</label>
                   <textarea readonly class="form-control" id="billing_address" rows="3"><?= $placed_order -> billing_address ?></textarea>
                 </div>
               </div>
-              <div class="col-md-5">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label for="shipping_address">Shipping Address:</label>
                   <textarea readonly class="form-control" id="shipping_address" rows="3"><?= $placed_order -> shipping_address ?></textarea>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="form-group">
-                  <label for="status">Order Status:</label>
-                  <input type="text" class="form-control" id="status" value="<?= $placed_order -> status ?>" readonly>
                 </div>
               </div>
               <div class="col-md-12">
