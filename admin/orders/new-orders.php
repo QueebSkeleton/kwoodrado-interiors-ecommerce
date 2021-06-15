@@ -103,9 +103,10 @@
                         data-toggle="modal" data-target="#process-order-modal" data-id="<?= $row["id"] ?>">
                         <i class="fas fa-tasks"></i> Process
                       </button>
-                      <a href="deny-order.php" class="btn btn-sm btn-danger">
+                      <button class="btn btn-sm btn-success btn-danger btn-deny-order"
+                        data-toggle="modal" data-target="#deny-order-modal" data-id="<?= $row["id"] ?>">
                         <i class="fas fa-ban"></i> Deny
-                      </a>
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -161,6 +162,18 @@
 </div>
 <!-- /.modal -->
 
+<!-- Deny Order Modal -->
+<div class="modal fade" id="deny-order-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <!-- jQuery -->
 <script src="/admin/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -179,6 +192,17 @@
       success: function(data) {
         $("#process-order-modal > .modal-dialog > .modal-content").empty();
         $("#process-order-modal > .modal-dialog > .modal-content").append(data);
+      }
+    });
+  });
+  // Deny order button click
+  $("button.btn-deny-order").click(function() {
+    $.ajax({
+      url: "/admin/orders/modals/deny-order-modal.php?id=" + $(this).data("id"),
+      dataType: "html",
+      success: function(data) {
+        $("#deny-order-modal > .modal-dialog > .modal-content").empty();
+        $("#deny-order-modal > .modal-dialog > .modal-content").append(data);
       }
     });
   });
@@ -216,6 +240,35 @@
         });
         // hide the modal
         $("#process-order-modal").modal("hide");
+      }
+    });
+  });
+
+  // Final deny button click
+  $(document).on("click", "button#btn-final-deny", function() {
+    $.ajax({
+      url: $(this).data("href"),
+      success: function(data) {
+        // show a success toast
+        Toast.fire({
+          icon: 'success',
+          title: 'Order is now denied and is rendered invalid. You can view this order in the denied panel.'
+        });
+        // hide the modal
+        $("#deny-order-modal").modal("hide");
+        // reload the page after 2 seconds
+        setTimeout(function() {
+          location.reload();
+        }, 2000);
+      },
+      error: function() {
+        // show a success toast
+        Toast.fire({
+          icon: 'error',
+          title: 'An error occured while processing your request. Please try again after a while.'
+        });
+        // hide the modal
+        $("#deny-order-modal").modal("hide");
       }
     });
   });
