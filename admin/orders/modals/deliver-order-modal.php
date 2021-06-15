@@ -63,7 +63,7 @@
     $first_order_item -> final_unit_price = floatval($first_row["final_unit_price"]);
     $first_order_item -> is_taxable = boolval($first_row["is_taxable"]);
     $first_order_item -> subtotal = $first_order_item -> quantity * $first_order_item -> final_unit_price;
-    $placed_order -> items = [$first_order_item];
+    $placed_order -> items[] = $first_order_item;
 
     // If product is taxable, calculate tax of this product then add to total tax
     // TODO: currently this tax scheme is fixed, please change soon
@@ -103,15 +103,15 @@
   $placed_order -> sale_without_tax = $placed_order -> total - $placed_order -> tax;
 ?>
 <div class="modal-header">
-  <h4 class="modal-title">Accept and Process</h4>
+  <h4 class="modal-title">Finalize and Deliver</h4>
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
  <div class="callout callout-info">
-    <h5><i class="fas fa-info-circle"></i> Processing orders</h5>
-    <p>When this order is flagged as processing, the requested items will be deducted from the inventory.</p>
+    <h5><i class="fas fa-info-circle"></i> Deliver orders</h5>
+    <p>After flagging an order to delivered, sales will be finalized and recorded, and will be shown in your reports panel.</p>
   </div>
 
   <!-- Order details -->
@@ -183,5 +183,5 @@
 </div>
 <div class="modal-footer justify-content-between">
   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-  <button data-href="/admin/orders/actions/process-order.php?id=<?= $placed_order -> id ?>" class="btn btn-primary" id="btn-final-process">Process</a>
+  <button data-href="/admin/orders/actions/deliver-order.php?id=<?= $placed_order -> id ?>" class="btn btn-success" id="btn-final-deliver">Finalize</a>
 </div>
