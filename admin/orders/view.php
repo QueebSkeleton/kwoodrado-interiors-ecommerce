@@ -10,31 +10,8 @@
     http_response_code(400);
     die("Error: No valid order id was specified in the request parameters.");
   }
-
-  // Data-only class for the complete order's details
-  // note~~ OOP programmers pls dont be mad at me
-  class PlacedOrderItem {
-    public $product_name;
-    public $product_is_taxable;
-    public $quantity;
-    public $final_unit_price;
-    public $subtotal;
-  }
-
-  class PlacedOrder {
-    public $id;
-    public $customer_name;
-    public $customer_phone_number;
-    public $customer_email_address;
-    public $billing_address;
-    public $shipping_address;
-    public $additional_notes;
-    public $status;
-    public $items;
-    public $sale_without_tax;
-    public $tax;
-    public $total;
-  }
+  
+  require("classes/Order.php");
 
   // Placeholder for fetched order
   $placed_order = new PlacedOrder();
@@ -48,8 +25,8 @@
   // Fetch order by id
   $order_result = mysqli_query($conn, "SELECT customer.first_name, customer.last_name, customer.phone_number,".
     " customer.email_address, placed_order.billing_address, placed_order.shipping_address, placed_order.additional_notes,".
-    " placed_order.status, product.name, product.is_taxable, placed_order_item.quantity, placed_order_item.final_unit_price".
-    " FROM placed_order LEFT JOIN customer ON customer.email_address = placed_order.customer_email_address".
+    " placed_order.status, product.name, placed_order_item.quantity, placed_order_item.final_unit_price,".
+    " placed_order_item.is_taxable FROM placed_order LEFT JOIN customer ON customer.email_address = placed_order.customer_email_address".
     " LEFT JOIN placed_order_item ON placed_order_item.order_id = placed_order.id".
     " LEFT JOIN product ON product.id = placed_order_item.product_id WHERE placed_order.id = ".$_GET["id"]);
 
@@ -80,15 +57,15 @@
   if(!empty($first_row["quantity"])) {
     $first_order_item = new PlacedOrderItem();
     $first_order_item -> product_name = $first_row["name"];
-    $first_order_item -> product_is_taxable = $first_row["is_taxable"];
     $first_order_item -> quantity = intval($first_row["quantity"]);
     $first_order_item -> final_unit_price = floatval($first_row["final_unit_price"]);
+    $first_order_item -> is_taxable = boolval($first_row["is_taxable"]);
     $first_order_item -> subtotal = $first_order_item -> quantity * $first_order_item -> final_unit_price;
     $placed_order -> items = [$first_order_item];
 
     // If product is taxable, calculate tax of this product then add to total tax
     // TODO: currently this tax scheme is fixed, please change soon
-    if($first_order_item -> product_is_taxable) {
+    if($first_order_item -> is_taxable) {
       $placed_order -> tax += $first_order_item -> final_unit_price * $first_order_item -> quantity * 0.12;
     }
 
@@ -100,15 +77,15 @@
   while($row = mysqli_fetch_assoc($order_result)) {
     $order_item = new PlacedOrderItem();
     $order_item -> product_name = $row["name"];
-    $order_item -> product_is_taxable = $row["is_taxable"];
     $order_item -> quantity = intval($row["quantity"]);
     $order_item -> final_unit_price = floatval($row["final_unit_price"]);
+    $order_item -> is_taxable = boolval($row["is_taxable"]);
     $order_item -> subtotal = $order_item -> quantity * $order_item -> final_unit_price;
     $placed_order -> items[] = $order_item;
 
     // If product is taxable, calculate tax of this product then add to total tax
     // TODO: currently this tax scheme is fixed, please change soon
-    if($order_item -> product_is_taxable) {
+    if($order_item -> is_taxable) {
       $placed_order -> tax += $order_item -> final_unit_price * $order_item -> quantity * 0.12;
     }
 
@@ -264,7 +241,7 @@
                       <tr>
                         <td><?= $item -> product_name ?></td>
                         <td>
-                          <?php if($item -> product_is_taxable): ?>
+                          <?php if($item -> is_taxable): ?>
                           <span class="badge badge-success">Yes</span>
                           <?php else: ?>
                           <span class="badge badge-danger">No</span>

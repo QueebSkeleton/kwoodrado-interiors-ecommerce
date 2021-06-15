@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="/admin/plugins/fontawesome-free/css/all.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="/admin/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="/admin/dist/css/adminlte.min.css">
 </head>
@@ -97,9 +99,10 @@
                       <a href="view.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-info">
                         <i class="fas fa-eye"></i> View
                       </a>
-                      <a href="process-order.php" class="btn btn-sm btn-success">
+                      <button class="btn btn-sm btn-success btn-primary btn-process-order"
+                        data-toggle="modal" data-target="#process-order-modal" data-id="<?= $row["id"] ?>">
                         <i class="fas fa-tasks"></i> Process
-                      </a>
+                      </button>
                       <a href="deny-order.php" class="btn btn-sm btn-danger">
                         <i class="fas fa-ban"></i> Deny
                       </a>
@@ -146,11 +149,76 @@
 </div>
 <!-- ./wrapper -->
 
+<!-- Process Order Modal -->
+<div class="modal fade" id="process-order-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <!-- jQuery -->
 <script src="/admin/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="/admin/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/admin/dist/js/adminlte.min.js"></script>
+<!-- Page specific script -->
+<script>
+  // Process order button click
+  $("button.btn-process-order").click(function() {
+    $.ajax({
+      url: "/admin/orders/modals/process-order-modal.php?id=" + $(this).data("id"),
+      dataType: "html",
+      success: function(data) {
+        $("#process-order-modal > .modal-dialog > .modal-content").empty();
+        $("#process-order-modal > .modal-dialog > .modal-content").append(data);
+      }
+    });
+  });
+
+  // Initialize a sweet alert toast
+  var Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+  });
+
+  // Final process button click
+  $(document).on("click", "button#btn-final-process", function() {
+    $.ajax({
+      url: $(this).data("href"),
+      success: function(data) {
+        // show a success toast
+        Toast.fire({
+          icon: 'success',
+          title: 'Order is now set to processing. Inventories have been updated'
+        });
+        // hide the modal
+        $("#process-order-modal").modal("hide");
+        // reload the page after 2 seconds
+        setTimeout(function() {
+          location.reload();
+        }, 2000);
+      },
+      error: function() {
+        // show a success toast
+        Toast.fire({
+          icon: 'error',
+          title: 'An error occured while processing. Please try again after a while.'
+        });
+        // hide the modal
+        $("#process-order-modal").modal("hide");
+      }
+    });
+  });
+</script>
 </body>
 </html>
