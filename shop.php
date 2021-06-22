@@ -7,7 +7,7 @@
   }
 
   $category = isset($_GET["category"]) && !empty($_GET["category"]) ? $_GET["category"] : NULL;
-  $limit = 12;
+  $limit = 9;
   $page = isset($_GET["page"]) ? $_GET["page"] : 1;
   $offset = $limit * ($page - 1);
 
@@ -20,6 +20,11 @@
   if($category != NULL) {
     $category_result = mysqli_query($conn, "SELECT product_category.*, COALESCE(COUNT(product.id), 0) AS total_product_count FROM product_category LEFT JOIN product ON product.category_name = product_category.name WHERE product_category.name = '".$category."'");
     $category_row = mysqli_fetch_assoc($category_result);
+    $total_product_count = $category_row["total_product_count"];
+  } else {
+    $category_result = mysqli_query($conn, "SELECT COALESCE(COUNT(product.id), 0) AS total_product_count FROM product");
+    $category_row = mysqli_fetch_assoc($category_result);
+    $total_product_count = $category_row["total_product_count"];
   }
 
 ?>
@@ -83,7 +88,7 @@
                             <li class="nav-item"><a href="shop.php" class="nav-link">All products</a></li>
                             <?php
                               // Retrieve categories
-                              $categories_result = mysqli_query($conn, "SELECT product_category.name, COALESCE(COUNT(product.id), 0) FROM product_category LEFT JOIN product ON product.category_name = product_category.name");
+                              $categories_result = mysqli_query($conn, "SELECT name FROM product_category");
 
                               // Output as links
                               while($row = mysqli_fetch_assoc($categories_result)):
@@ -133,7 +138,11 @@
         <div class="container">
           <div class="row bar">
             <div class="col-md-9">
+              <?php if($total_product_count > 0): ?>
               <p class="text-muted lead"><?= $category == NULL ? "You are currently browsing a list of all our offered products. Find a furniture that fits your liking." : $category_row["description"] ?></p>
+              <?php else: ?>
+              <p class="text-muted lead">You're viewing a category that does not contain any products yet. Choose another.</p>
+              <?php endif ?>
               <div class="row products products-big">
                 <?php
                   // Get products
@@ -165,8 +174,7 @@
                       </a>
                     </li>
                     <?php
-                      $category_product_count = $category_row["total_product_count"];
-                      $total_number_of_pages = ceil(floatval($category_product_count) / $limit);
+                      $total_number_of_pages = ceil(floatval($total_product_count) / $limit);
 
                       for($i = 1; $i <= $total_number_of_pages; $i++):
                     ?>
@@ -191,7 +199,7 @@
                   <ul class="nav nav-pills flex-column text-sm category-menu">
                     <?php
                       // Retrieve categories
-                      $categories_result = mysqli_query($conn, "SELECT product_category.name, COALESCE(COUNT(product.id), 0) AS product_count FROM product_category LEFT JOIN product ON product.category_name = product_category.name");
+                      $categories_result = mysqli_query($conn, "SELECT product_category.name, COUNT(product.id) AS product_count FROM product_category LEFT JOIN product ON product.category_name = product_category.name GROUP BY product.category_name");
 
                       // Output as links
                       while($row = mysqli_fetch_assoc($categories_result)):
