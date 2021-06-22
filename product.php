@@ -6,10 +6,20 @@
     die("Only GET requests are allowed.");
   }
 
-  $category = isset($_GET["category"]) && !empty($_GET["category"]) ? $_GET["category"] : NULL;
-  $limit = 9;
-  $page = isset($_GET["page"]) ? $_GET["page"] : 1;
-  $offset = $limit * ($page - 1);
+  // If id is not given, throw bad request
+  if(!isset($_GET["id"]) || empty($_GET["id"])) {
+    http_response_code(400);
+    die("Invalid product.");
+  }
+
+  // Class placeholder for product details
+  class Product {
+    public $name;
+    public $category_name;
+    public $description;
+    public $unit_price;
+    public $image_filenames;
+  }
 
   // Parse config.ini file then get db credentials
   $config = parse_ini_file("../config.ini");
@@ -17,21 +27,34 @@
   // Create connection to db
   $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
 
-  if($category != NULL) {
-    $category_result = mysqli_query($conn, "SELECT product_category.*, COALESCE(COUNT(product.id), 0) AS total_product_count FROM product_category LEFT JOIN product ON product.category_name = product_category.name WHERE product_category.name = '".$category."'");
-    $category_row = mysqli_fetch_assoc($category_result);
-    $total_product_count = $category_row["total_product_count"];
-  } else {
-    $category_result = mysqli_query($conn, "SELECT COALESCE(COUNT(product.id), 0) AS total_product_count FROM product");
-    $category_row = mysqli_fetch_assoc($category_result);
-    $total_product_count = $category_row["total_product_count"];
+  // Get product by id
+  $result = mysqli_query($conn, "SELECT product.*, product_image.local_filesystem_location FROM product LEFT JOIN product_image ON product_image.product_id = product.id WHERE product.id = ".$_GET["id"]);
+
+  // Create product placeholder
+  $product = new Product();
+  
+  // Fetch product details from first row
+  if($first_row = mysqli_fetch_assoc($result)) {
+    $product -> name = $first_row["name"];
+    $product -> category_name = $first_row["category_name"];
+    $product -> description = $first_row["description"];
+    $product -> unit_price = $first_row["unit_price"];
+    $product -> image_filenames = [];
+
+    if(!is_null($first_row["local_filesystem_location"])) {
+      $product -> image_filenames[] = $first_row["local_filesystem_location"];
+
+      while($row = mysqli_fetch_assoc($result))
+        if(!is_null($row["local_filesystem_location"]))
+          $product -> image_filenames[] = $row["local_filesystem_location"];
+    }
   }
 
 ?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Kwoodrado Interiors | Shop</title>
+    <title><?= $product -> name ?> | Kwoodrado Interiors</title>
     <?php include('include/head-tags.php'); ?>
   </head>
   <body>
@@ -123,12 +146,13 @@
         <div class="container">
           <div class="row d-flex align-items-center flex-wrap">
             <div class="col-md-7">
-              <h1 class="h2"><?= $category == NULL ? "All Products" : $category; ?></h1>
+              <h1 class="h2"><?= $product -> name ?></h1>
             </div>
             <div class="col-md-5">
               <ul class="breadcrumb d-flex justify-content-end">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active"><?= $category == NULL ? "All Products" : $category; ?></li>
+                <li class="breadcrumb-item"><a href="/shop.php?category=<?= $product -> category_name ?>"><?= $product -> category_name ?></a></li>
+                <li class="breadcrumb-item active"><?= $product -> name ?></li>
               </ul>
             </div>
           </div>
@@ -137,59 +161,51 @@
       <div id="content">
         <div class="container">
           <div class="row bar">
-            <div class="col-md-9">
-              <?php if($total_product_count > 0): ?>
-              <p class="text-muted lead"><?= $category == NULL ? "You are currently browsing a list of all our offered products. Find a furniture that fits your liking." : $category_row["description"] ?></p>
-              <?php else: ?>
-              <p class="text-muted lead">You're viewing a category that does not contain any products yet. Choose another.</p>
-              <?php endif ?>
-              <div class="row products products-big">
-                <?php
-                  // Get products
-                  if($category == NULL) {
-                    $products_result = mysqli_query($conn, "SELECT product.id, product.name, product.unit_price, product.compare_to_price, product_image.local_filesystem_location AS image_location FROM product LEFT JOIN (SELECT * FROM product_image LIMIT 1) AS product_image ON product_image.product_id = product.id LIMIT ".$limit." OFFSET ".$offset);
-                  } else {
-                    $products_result = mysqli_query($conn, "SELECT product.id, product.name, product.unit_price, product.compare_to_price, product_image.local_filesystem_location AS image_location FROM product LEFT JOIN (SELECT * FROM product_image LIMIT 1) AS product_image ON product_image.product_id = product.id WHERE product.category_name = '".$category."' LIMIT ".$limit." OFFSET ".$offset);
-                  }
-
-                  while($row = mysqli_fetch_assoc($products_result)):
-                ?>
-                <div class="col-lg-4 col-md-6">
-                  <div class="product">
-                    <div class="image"><a href="product.php?id=<?= $row["id"] ?>"><img src="<?= is_null($row["image_location"]) ? "/img/empty-image.png" : "/product-images/".$row["image_location"] ?>" alt="" class="img-fluid image1"></a></div>
-                    <div class="text">
-                      <h3 class="h5"><a href="product.php?id=<?= $row["id"] ?>"><?= $row["name"] ?></a></h3>
-                      <p class="price">Php<?= number_format($row["unit_price"], 2) ?></p>
-                    </div>
+            <!-- LEFT COLUMN _________________________________________________________-->
+            <div class="col-lg-9">
+              <div id="productMain" class="row">
+                <div class="col-sm-6">
+                  <div data-slider-id="1" class="owl-carousel shop-detail-carousel">
+                    <?php if(empty($product -> image_filenames)): ?>
+                    <div> <img src="/img/empty-image.png" alt="" class="img-fluid"></div>
+                    <?php else: foreach($product -> image_filenames as $image_filename): ?>
+                    <div> <img src="/product-images/<?= $image_filename ?>" alt="" class="img-fluid"></div>
+                    <?php endforeach; endif; ?>
                   </div>
                 </div>
-                <?php endwhile; ?>
+                <div class="col-sm-6">
+                  <div class="box">
+                    <form>
+                      <h2 class="text-center"><?= $product -> name ?></h2>
+                      <p class="price">Php<?= number_format($product -> unit_price, 2) ?></p>
+                      <p class="text-center">
+                        <button type="submit" class="btn btn-template-outlined"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                      </p>
+                    </form>
+                  </div>
+                  <div data-slider-id="1" class="owl-thumbs">
+                    <?php if(empty($product -> image_filenames)): ?>
+                    <button class="owl-thumb-item"><img src="/img/empty-image.png" alt="" style="width: 100px; height: 100px;"></button>
+                    <?php else: foreach($product -> image_filenames as $image_filename): ?>
+                    <button class="owl-thumb-item"><img src="/product-images/<?= $image_filename ?>" alt="" class="img-fluid" style="width: 100px; height: 100px;"></button>
+                    <?php endforeach; endif; ?>
+                  </div>
+                </div>
               </div>
-              <div class="pages">
-                <nav aria-label="Page navigation example" class="d-flex justify-content-center">
-                  <ul class="pagination">
-                    <li class="page-item<?= $page == 1 ? " disabled" : "" ?>">
-                      <a href="<?= $page > 1 ? "/shop.php?".($category == NULL ? "" : "category=".$category."&")."page=".($page - 1) : "#"  ?>" class="page-link">
-                        <i class="fa fa-angle-double-left"></i>
-                      </a>
-                    </li>
-                    <?php
-                      $total_number_of_pages = ceil(floatval($total_product_count) / $limit);
-
-                      for($i = 1; $i <= $total_number_of_pages; $i++):
-                    ?>
-                    <li class="page-item<?= $page == $i ? " active" : "" ?>"><a href="/shop.php?<?= $category == NULL ? "" : "category=".$category."&" ?>page=<?= $i ?>" class="page-link"><?= $i ?></a></li>
-                    <?php endfor; ?>
-                    <li class="page-item<?= $page == $total_number_of_pages ? " disabled" : "" ?>">
-                      <a href="<?= $page < $total_number_of_pages ? "/shop.php?".($category == NULL ? "" : "category=".$category."&")."page=".($page + 1) : "#"  ?>" class="page-link">
-                        <i class="fa fa-angle-double-right"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
+              <div id="details" class="box mb-4 mt-4">
+                <?= $product -> description ?>
+              </div>
+              <div id="product-social" class="box social text-center mb-5 mt-5">
+                <h4 class="heading-light">Show it to your friends</h4>
+                <ul class="social list-inline">
+                  <li class="list-inline-item"><a href="#" data-animate-hover="pulse" class="external facebook"><i class="fa fa-facebook"></i></a></li>
+                  <li class="list-inline-item"><a href="#" data-animate-hover="pulse" class="external gplus"><i class="fa fa-google-plus"></i></a></li>
+                  <li class="list-inline-item"><a href="#" data-animate-hover="pulse" class="external twitter"><i class="fa fa-twitter"></i></a></li>
+                  <li class="list-inline-item"><a href="#" data-animate-hover="pulse" class="email"><i class="fa fa-envelope"></i></a></li>
+                </ul>
               </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-lg-3">
               <!-- MENUS AND FILTERS-->
               <div class="panel panel-default sidebar-menu">
                 <div class="panel-heading">
