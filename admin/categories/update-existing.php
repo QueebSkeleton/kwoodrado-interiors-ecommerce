@@ -88,7 +88,7 @@
                   <option value=""<?= empty($category_row["parent_category_name"]) ? "selected" : "" ?>>None</option>
                   <?php
                     // Get all categories
-                    $categories_result = mysqli_query($conn, "SELECT name FROM product_category");
+                    $categories_result = mysqli_query($conn, "SELECT name FROM product_category WHERE name != '".$_GET["name"]."'");
 
                     while($row = mysqli_fetch_assoc($categories_result)):
                   ?>
