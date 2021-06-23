@@ -40,8 +40,29 @@
   // Execute insert statement
   mysqli_stmt_execute($insert_stmt);
 
-  // Close all
+  // Get product id
+  $product_insert_id = $insert_stmt -> insert_id;
+
+  // Close insert statement
   mysqli_stmt_close($insert_stmt);
+
+  // Save all images
+
+  // Prepare insert image statement
+  $insert_img_stmt = mysqli_prepare($conn, "INSERT INTO `product_image` VALUES (?, ?)");
+  foreach($_FILES["images"]["name"] as $key => $filename) {
+    $tmp_name = $_FILES["images"]["tmp_name"][$key];
+    $name = basename($filename);
+
+    // If file was moved successfully, save location to database
+    if(move_uploaded_file($tmp_name, "../../../product-images/$name")) {
+      mysqli_stmt_bind_param($insert_img_stmt, "is", $product_insert_id, $name);
+      mysqli_stmt_execute($insert_img_stmt);
+    }
+  }
+
+  // Close all
+  mysqli_stmt_close($insert_img_stmt);
   mysqli_close($conn);
 
   // TODO: add error cases
