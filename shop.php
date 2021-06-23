@@ -1,4 +1,4 @@
-<?php 
+<?php
 
   // Only allow GET requests
   if($_SERVER["REQUEST_METHOD"] != "GET") {
@@ -36,7 +36,7 @@
   </head>
   <body>
     <div id="all">
-      
+
       <?php /* Topbar */ include('include/topbar.php'); ?>
 
       <!-- Login Modal-->
@@ -66,7 +66,7 @@
         </div>
       </div>
       <!-- Login modal end-->
-      
+
       <!-- Navbar Start-->
       <header class="nav-holder make-sticky">
         <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
@@ -118,7 +118,7 @@
         </div>
       </header>
       <!-- Navbar End-->
-      
+
       <div id="heading-breadcrumbs">
         <div class="container">
           <div class="row d-flex align-items-center flex-wrap">
@@ -147,9 +147,9 @@
                 <?php
                   // Get products
                   if($category == NULL) {
-                    $products_result = mysqli_query($conn, "SELECT product.id, product.name, product.unit_price, product.compare_to_price, product_image.local_filesystem_location AS image_location FROM product LEFT JOIN (SELECT * FROM product_image LIMIT 1) AS product_image ON product_image.product_id = product.id LIMIT ".$limit." OFFSET ".$offset);
+                    $products_result = mysqli_query($conn, "SELECT product.id, product.name, product.unit_price, product.compare_to_price, product_image.local_filesystem_location AS image_location FROM product LEFT JOIN (SELECT DISTINCT(product_id), MIN(local_filesystem_location) AS local_filesystem_location FROM product_image GROUP BY product_id) AS product_image ON product_image.product_id = product.id LIMIT ".$limit." OFFSET ".$offset);
                   } else {
-                    $products_result = mysqli_query($conn, "SELECT product.id, product.name, product.unit_price, product.compare_to_price, product_image.local_filesystem_location AS image_location FROM product LEFT JOIN (SELECT * FROM product_image LIMIT 1) AS product_image ON product_image.product_id = product.id WHERE product.category_name = '".$category."' LIMIT ".$limit." OFFSET ".$offset);
+                    $products_result = mysqli_query($conn, "SELECT product.id, product.name, product.unit_price, product.compare_to_price, product_image.local_filesystem_location AS image_location FROM product LEFT JOIN (SELECT DISTINCT(product_id), MIN(local_filesystem_location) AS local_filesystem_location FROM product_image GROUP BY product_id) AS product_image ON product_image.product_id = product.id WHERE product.category_name = '".$category."' LIMIT ".$limit." OFFSET ".$offset);
                   }
 
                   while($row = mysqli_fetch_assoc($products_result)):
@@ -215,7 +215,7 @@
           </div>
         </div>
       </div>
-      
+
       <?php /* Footer */ include('include/footer.php'); ?>
     </div>
 
