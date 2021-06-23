@@ -139,7 +139,7 @@
           <div class="row bar">
             <div class="col-md-9">
               <?php if($total_product_count > 0): ?>
-              <p class="text-muted lead"><?= $category == NULL ? "You are currently browsing a list of all our offered products. Find a furniture that fits your liking." : $category_row["description"] ?></p>
+              <?= $category == NULL ? "<p class=\"text-muted lead\">You are currently browsing a list of all our offered products. Find a furniture that fits your liking.</p>" : $category_row["description"] ?>
               <?php else: ?>
               <p class="text-muted lead">You're viewing a category that does not contain any products yet. Choose another.</p>
               <?php endif ?>
