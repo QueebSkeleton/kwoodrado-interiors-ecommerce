@@ -1,3 +1,11 @@
+<?php
+  // Check if admin is already logged in
+  session_start();
+  if(!isset($_SESSION["admin"])) {
+    header('Location: /admin/login-form.php?error=Log in first before you access admin-specific pages.');
+    die();
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,7 +92,7 @@
                 </tr>
               </thead>
               <tbody>
-                <?php 
+                <?php
                   if(mysqli_num_rows($orders_result) > 0):
                     while($row = mysqli_fetch_assoc($orders_result)): ?>
                 <tr>

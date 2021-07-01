@@ -1,4 +1,12 @@
 <?php
+  // Check if admin is already logged in
+  session_start();
+  if(!isset($_SESSION["admin"])) {
+    header('Location: /admin/login-form.php?error=Log in first before you access admin-specific pages.');
+    die();
+  }
+?>
+<?php
   // Only allow GET method
   if($_SERVER["REQUEST_METHOD"] != "GET") {
     http_response_code(400);
@@ -10,7 +18,7 @@
     http_response_code(400);
     die("Error: No valid order id was specified in the request parameters.");
   }
-  
+
   require("classes/Order.php");
 
   // Placeholder for fetched order

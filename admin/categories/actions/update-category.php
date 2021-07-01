@@ -1,4 +1,10 @@
 <?php
+  // Check if admin is already logged in
+  session_start();
+  if(!isset($_SESSION["admin"])) {
+    header('Location: /admin/login-form.php?error=Log in first before you access admin-specific pages.');
+    die();
+  }
 
   // Only allow POST requests
   // TODO: Add error-handling mechanism

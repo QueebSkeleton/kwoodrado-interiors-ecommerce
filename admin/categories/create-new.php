@@ -1,3 +1,11 @@
+<?php
+  // Check if admin is already logged in
+  session_start();
+  if(!isset($_SESSION["admin"])) {
+    header('Location: /admin/login-form.php?error=Log in first before you access admin-specific pages.');
+    die();
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +24,7 @@
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-  
+
   <!-- Navbar -->
   <?php include("../include/navbar.php"); ?>
 
@@ -97,7 +105,7 @@
     </section>
     <!-- /.content -->
   </div>
-  
+
   <!-- Footer -->
   <?php include("../include/footer.php"); ?>
 

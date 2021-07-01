@@ -1,4 +1,11 @@
 <?php
+  session_start();
+
+  // Check if admin is already logged in
+  if(!isset($_SESSION["admin"])) {
+    header('Location: /admin/login-form.php?error=Log in first before you access admin-specific pages.');
+    die();
+  }
 
   // Only allow GET requests
   if($_SERVER["REQUEST_METHOD"] != "GET") {
@@ -199,7 +206,7 @@ GROUP BY DATE(placed_order.placed_in)");
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  
+
   <!-- Footer -->
   <?php include("include/footer.php"); ?>
 
