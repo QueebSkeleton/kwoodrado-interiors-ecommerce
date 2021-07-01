@@ -199,12 +199,12 @@
                   <ul class="nav nav-pills flex-column text-sm category-menu">
                     <?php
                       // Retrieve categories
-                      $categories_result = mysqli_query($conn, "SELECT product_category.name, COUNT(product.id) AS product_count FROM product_category LEFT JOIN product ON product.category_name = product_category.name GROUP BY product.category_name");
+                      $categories_result = mysqli_query($conn, "SELECT product_category.name, COALESCE(product_results.total_count, 0) AS total_count FROM product_category LEFT JOIN (SELECT category_name, COUNT(id) AS total_count FROM product GROUP BY category_name) AS product_results ON product_results.category_name = product_category.name");
 
                       // Output as links
                       while($row = mysqli_fetch_assoc($categories_result)):
                     ?>
-                    <li class="nav-item"><a href="shop.php?category=<?= $row["name"] ?>" class="nav-link d-flex align-items-center justify-content-between"><span><?= $row["name"] ?> </span><span class="badge badge-secondary"><?= $row["product_count"] ?></span></a>
+                    <li class="nav-item"><a href="shop.php?category=<?= $row["name"] ?>" class="nav-link d-flex align-items-center justify-content-between"><span><?= $row["name"] ?> </span><span class="badge badge-secondary"><?= $row["total_count"] ?></span></a>
                     </li>
                     <?php endwhile; ?>
                   </ul>
