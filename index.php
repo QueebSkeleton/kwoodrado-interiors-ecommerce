@@ -31,7 +31,7 @@
                 </ul>
                 <?php if(!isset($_SESSION["email_address"])): ?>
                 <div class="login">
-                  <a href="#" data-toggle="modal" data-target="#cart-modal" class="login-btn">
+                  <a href="my-cart.php" class="login-btn">
                     <i class="fa fa-shopping-cart"></i><span class="d-none d-md-inline-block">My cart</span>
                   </a>
                   <a href="#" data-toggle="modal" data-target="#login-modal" class="login-btn">
@@ -43,7 +43,7 @@
                 </div>
                 <?php else: ?>
                 <div class="login">
-                  <a href="#" data-toggle="modal" data-target="#cart-modal" class="login-btn">
+                  <a href="my-cart.php" class="login-btn">
                     <i class="fa fa-shopping-cart"></i><span class="d-none d-md-inline-block">My cart</span>
                   </a>
                   <a href="my-orders.php" class="login-btn">

@@ -15,6 +15,7 @@
 
   // Class placeholder for product details
   class Product {
+    public $id;
     public $name;
     public $category_name;
     public $description;
@@ -36,6 +37,7 @@
 
   // Fetch product details from first row
   if($first_row = mysqli_fetch_assoc($result)) {
+    $product -> id = $first_row["id"];
     $product -> name = $first_row["name"];
     $product -> category_name = $first_row["category_name"];
     $product -> description = $first_row["description"];
@@ -76,7 +78,7 @@
                 </ul>
                 <?php if(!isset($_SESSION["email_address"])): ?>
                 <div class="login">
-                  <a href="#" data-toggle="modal" data-target="#cart-modal" class="login-btn">
+                  <a href="my-cart.php" class="login-btn">
                     <i class="fa fa-shopping-cart"></i><span class="d-none d-md-inline-block">My cart</span>
                   </a>
                   <a href="#" data-toggle="modal" data-target="#login-modal" class="login-btn">
@@ -88,7 +90,7 @@
                 </div>
                 <?php else: ?>
                 <div class="login">
-                  <a href="#" data-toggle="modal" data-target="#cart-modal" class="login-btn">
+                  <a href="my-cart.php" class="login-btn">
                     <i class="fa fa-shopping-cart"></i><span class="d-none d-md-inline-block">My cart</span>
                   </a>
                   <a href="my-orders.php" class="login-btn">
@@ -197,13 +199,11 @@
                 </div>
                 <div class="col-sm-6">
                   <div class="box">
-                    <form>
-                      <h2 class="text-center"><?= $product -> name ?></h2>
-                      <p class="price">Php<?= number_format($product -> unit_price, 2) ?></p>
-                      <p class="text-center">
-                        <button type="submit" class="btn btn-template-outlined"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                      </p>
-                    </form>
+                    <h2 class="text-center"><?= $product -> name ?></h2>
+                    <p class="price">Php<?= number_format($product -> unit_price, 2) ?></p>
+                    <p class="text-center">
+                      <a href="add-to-cart.php?id=<?= $product -> id ?>" class="btn btn-template-outlined"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                    </p>
                   </div>
                   <div data-slider-id="1" class="owl-thumbs">
                     <?php if(empty($product -> image_filenames)): ?>
