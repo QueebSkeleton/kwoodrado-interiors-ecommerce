@@ -98,7 +98,7 @@
                         <a href="view.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-info">
                           <i class="fas fa-eye"></i> View
                         </a>
-                        <a href="order-invoice.php" class="btn btn-sm btn-warning">
+                        <a href="/invoice.php?id=<?= $row["id"] ?>" target="_blank" class="btn btn-sm btn-warning">
                           <i class="fas fa-print"></i> Invoice
                         </a>
                       </div>
