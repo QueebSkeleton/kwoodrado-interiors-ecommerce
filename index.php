@@ -1,3 +1,12 @@
+<?php
+  session_start();
+
+  // Parse configuration file
+  $config = parse_ini_file("../config.ini");
+
+  // Create connection to database
+  $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,7 +15,7 @@
   </head>
   <body>
     <div id="all">
-      
+
       <?php /* Topbar */ include('include/topbar.php'); ?>
 
       <!-- Login Modal-->
@@ -36,10 +45,60 @@
         </div>
       </div>
       <!-- Login modal end-->
-      
-      <?php /* Navbar */ include('include/navbar.php'); ?>
-      
-      <section style="background: url('img/photogrid.jpg') center center repeat; background-size: cover;" class="bar background-white relative-positioned">
+
+      <!-- Navbar Start-->
+      <header class="nav-holder make-sticky">
+        <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
+          <div class="container"><a href="index.html" class="navbar-brand home"><img src="img/Logo-v2.png" alt="Universal logo" class="d-inline-block" style="height: 40px;"><span class="sr-only">Universal - go to homepage</span></a>
+            <button type="button" data-toggle="collapse" data-target="#navigation" class="navbar-toggler btn-template-outlined"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
+            <div id="navigation" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a href="/">Home</a>
+                </li>
+                <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Products<b class="caret"></b></a>
+                  <ul class="dropdown-menu megamenu">
+                    <li>
+                      <div class="row">
+                        <div class="col-lg-6"><img src="/img/table-products-navbar.png" alt="" class="img-fluid d-none d-lg-block"></div>
+                        <div class="col-lg-6 col-md-6">
+                          <h5>Categories</h5>
+                          <ul class="list-unstyled mb-3">
+                            <li class="nav-item"><a href="shop.php" class="nav-link">All products</a></li>
+                            <?php
+                              // Retrieve categories
+                              $categories_result = mysqli_query($conn, "SELECT name FROM product_category");
+
+                              // Output as links
+                              while($row = mysqli_fetch_assoc($categories_result)):
+                            ?>
+                            <li class="nav-item"><a href="shop.php?category=<?= $row["name"] ?>" class="nav-link"><?= $row["name"] ?></a></li>
+                            <?php endwhile; ?>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item"><a href="/about.php">About Us</a></li>
+                <li class="nav-item"><a href="/blog.php">Blog</a></li>
+                <li class="nav-item"><a href="/contact.php">Contact</a></li>
+              </ul>
+            </div>
+            <div id="search" class="collapse clearfix">
+              <form role="search" class="navbar-form">
+                <div class="input-group">
+                  <input type="text" placeholder="Search" class="form-control"><span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button></span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- Navbar End-->
+
+      <section style="background: url('img/landing-page-carousel-bg.jpeg') center; background-size: cover;" class="bar background-white relative-positioned">
         <div class="container">
           <!-- Carousel Start-->
           <div class="home-carousel">
@@ -49,49 +108,23 @@
                 <div class="item">
                   <div class="row">
                     <div class="col-md-5 text-right">
-                      <p><img src="img/logo.png" alt="" class="ml-auto"></p>
-                      <h1>Multipurpose responsive theme</h1>
-                      <p>Business. Corporate. Agency.<br>Portfolio. Blog. E-commerce.</p>
+                      <p><img src="img/Logo-v2.png" alt="" class="ml-auto"></p>
+                      <h1>Your wooden furniture store</h1>
+                      <p>Crafstmanship. Elegance.<br>Tables. Chairs. E-commerce.</p>
                     </div>
-                    <div class="col-md-7"><img src="img/template-homepage.png" alt="" class="img-fluid"></div>
+                    <div class="col-md-7"><img src="img/carousel-1.png" alt="" class="img-fluid"></div>
                   </div>
                 </div>
                 <div class="item">
                   <div class="row">
-                    <div class="col-md-7 text-center"><img src="img/template-mac.png" alt="" class="img-fluid"></div>
+                    <div class="col-md-7 text-center"><img src="img/carousel-2.png" alt="" class="img-fluid"></div>
                     <div class="col-md-5">
-                      <h2>46 HTML pages full of features</h2>
+                      <h2>Wide selection range of furniture</h2>
                       <ul class="list-unstyled">
-                        <li>Sliders and carousels</li>
-                        <li>4 Header variations</li>
-                        <li>Google maps, Forms, Megamenu, CSS3 Animations and much more</li>
-                        <li>+ 11 extra pages showing template features</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="row">
-                    <div class="col-md-5 text-right">
-                      <h1>Design</h1>
-                      <ul class="list-unstyled">
-                        <li>Clean and elegant design</li>
-                        <li>Full width and boxed mode</li>
-                        <li>Easily readable Roboto font and awesome icons</li>
-                        <li>7 preprepared colour variations</li>
-                      </ul>
-                    </div>
-                    <div class="col-md-7"><img src="img/template-easy-customize.png" alt="" class="img-fluid"></div>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="row">
-                    <div class="col-md-7"><img src="img/template-easy-code.png" alt="" class="img-fluid"></div>
-                    <div class="col-md-5">
-                      <h1>Easy to customize</h1>
-                      <ul class="list-unstyled">
-                        <li>7 preprepared colour variations.</li>
-                        <li>Easily to change fonts</li>
+                        <li>Dining sets</li>
+                        <li>Rocking chairs</li>
+                        <li>Wooden dresser tables</li>
+                        <li>+ many more</li>
                       </ul>
                     </div>
                   </div>
@@ -104,26 +137,64 @@
       </section>
       <section class="bar background-white">
         <div class="container text-center">
+          <h1 class="h2 mb-4">NEW PRODUCTS</h1>
+          <div class="row products products-big">
+            <?php
+              // Get new products (products added 5 days ago)
+              $products_result = mysqli_query($conn,
+                "SELECT product.id, product.name, product.unit_price, product.compare_to_price, ".
+                "product_image.local_filesystem_location AS image_location FROM product ".
+                "LEFT JOIN (SELECT DISTINCT(product_id), MIN(local_filesystem_location) AS local_filesystem_location ".
+                "FROM product_image GROUP BY product_id) AS product_image ON product_image.product_id = product.id ".
+                "WHERE DATE(product.added_on) >= SUBDATE(NOW(), 5) LIMIT 8");
+
+              // Display all products
+              while($row = mysqli_fetch_assoc($products_result)):
+            ?>
+            <div class="col-lg-3 col-md-6">
+              <div class="product">
+                <div class="image"><a href="product.php?id=<?= $row["id"] ?>"><img src="<?= is_null($row["image_location"]) ? "/img/empty-image.png" : "/product-images/".$row["image_location"] ?>" alt="" class="img-fluid image1"></a></div>
+                <div class="text">
+                  <h3 class="h5"><a href="product.php?id=<?= $row["id"] ?>"><?= $row["name"] ?></a></h3>
+                  <p class="price">Php<?= number_format($row["unit_price"], 2) ?></p>
+                </div>
+              </div>
+            </div>
+            <?php endwhile; ?>
+          </div>
+        </div>
+      </section>
+      <section style="background: url(img/fixed-background-2.jpg) center top no-repeat; background-size: cover;" class="bar no-mb color-white text-center bg-fixed relative-positioned">
+        <div class="dark-mask"></div>
+        <div class="container">
+          <div class="icon icon-outlined icon-lg"><i class="fa fa-shopping-cart"></i></div>
+          <h3 class="text-uppercase">See our wide selection of products</h3>
+          <p class="lead">We have prepared for you different wooden tables and chairs. Few come with sets in cheaper prices.</p>
+          <p class="text-center"><a href="shop.php" class="btn btn-template-outlined-white btn-lg">Shop</a></p>
+        </div>
+      </section>
+      <section class="bar background-white">
+        <div class="container text-center">
           <div class="row">
             <div class="col-lg-4 col-md-6">
               <div class="box-simple">
                 <div class="icon-outlined"><i class="fa fa-desktop"></i></div>
-                <h3 class="h4">Webdesign</h3>
-                <p>Fifth abundantly made Give sixth hath. Cattle creature i be don't them behold green moved fowl Moved life us beast good yielding. Have bring.</p>
+                <h3 class="h4">Elegance</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas odio ante, fringilla a rhoncus ut, mattis non massa. Sed arcu nisl, posuere id faucibus et, condimentum sed nunc. Proin vitae luctus enim, a volutpat risus. Nullam finibus, mauris quis venenatis viverra, quam purus imperdiet purus, ac bibendum magna eros vitae dolor. Fusce a ultricies leo, ut mattis arcu.</p>
               </div>
             </div>
             <div class="col-lg-4 col-md-6">
               <div class="box-simple">
                 <div class="icon-outlined"><i class="fa fa-print"></i></div>
-                <h3 class="h4">Print</h3>
-                <p>Advantage old had otherwise sincerity dependent additions. It in adapted natural hastily is justice. Six draw you him full not mean evil. Prepare garrets it expense windows shewing do an.</p>
+                <h3 class="h4">Aesthetic</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas odio ante, fringilla a rhoncus ut, mattis non massa. Sed arcu nisl, posuere id faucibus et, condimentum sed nunc. Proin vitae luctus enim, a volutpat risus. Nullam finibus, mauris quis venenatis viverra, quam purus imperdiet purus, ac bibendum magna eros vitae dolor. Fusce a ultricies leo, ut mattis arcu.</p>
               </div>
             </div>
             <div class="col-lg-4 col-md-6">
               <div class="box-simple">
                 <div class="icon-outlined"><i class="fa fa-globe"></i></div>
-                <h3 class="h4">SEO and SEM</h3>
-                <p>Am terminated it excellence invitation projection as. She graceful shy believed distance use nay. Lively is people so basket ladies window expect.</p>
+                <h3 class="h4">Craftsmanship</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas odio ante, fringilla a rhoncus ut, mattis non massa. Sed arcu nisl, posuere id faucibus et, condimentum sed nunc. Proin vitae luctus enim, a volutpat risus. Nullam finibus, mauris quis venenatis viverra, quam purus imperdiet purus, ac bibendum magna eros vitae dolor. Fusce a ultricies leo, ut mattis arcu.</p>
               </div>
             </div>
           </div>
@@ -131,219 +202,28 @@
             <div class="col-lg-4 col-md-6">
               <div class="box-simple">
                 <div class="icon-outlined"><i class="fa fa-lightbulb-o"></i></div>
-                <h3 class="h4">Consulting</h3>
-                <p>Fifth abundantly made Give sixth hath. Cattle creature i be don't them behold green moved fowl Moved life us beast good yielding. Have bring.</p>
+                <h3 class="h4">New ideas</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas odio ante, fringilla a rhoncus ut, mattis non massa. Sed arcu nisl, posuere id faucibus et, condimentum sed nunc. Proin vitae luctus enim, a volutpat risus. Nullam finibus, mauris quis venenatis viverra, quam purus imperdiet purus, ac bibendum magna eros vitae dolor. Fusce a ultricies leo, ut mattis arcu.</p>
               </div>
             </div>
             <div class="col-lg-4 col-md-6">
               <div class="box-simple">
                 <div class="icon-outlined"><i class="fa fa-envelope-o"></i></div>
-                <h3 class="h4">Email Marketing</h3>
-                <p>Advantage old had otherwise sincerity dependent additions. It in adapted natural hastily is justice. Six draw you him full not mean evil. Prepare garrets it expense windows shewing do an.</p>
+                <h3 class="h4">Newsletter</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas odio ante, fringilla a rhoncus ut, mattis non massa. Sed arcu nisl, posuere id faucibus et, condimentum sed nunc. Proin vitae luctus enim, a volutpat risus. Nullam finibus, mauris quis venenatis viverra, quam purus imperdiet purus, ac bibendum magna eros vitae dolor. Fusce a ultricies leo, ut mattis arcu.</p>
               </div>
             </div>
             <div class="col-lg-4 col-md-6">
               <div class="box-simple">
                 <div class="icon-outlined"><i class="fa fa-user"></i></div>
-                <h3 class="h4">UX</h3>
-                <p>Am terminated it excellence invitation projection as. She graceful shy believed distance use nay. Lively is people so basket ladies window expect.</p>
+                <h3 class="h4">Creativity</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas odio ante, fringilla a rhoncus ut, mattis non massa. Sed arcu nisl, posuere id faucibus et, condimentum sed nunc. Proin vitae luctus enim, a volutpat risus. Nullam finibus, mauris quis venenatis viverra, quam purus imperdiet purus, ac bibendum magna eros vitae dolor. Fusce a ultricies leo, ut mattis arcu.</p>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <section class="bar background-pentagon no-mb text-md-center">
-        <div class="container">
-          <div class="heading text-center">
-            <h2>Testimonials</h2>
-          </div>
-          <p class="lead">We have worked with many clients and we always like to hear they come out from the cooperation happy and satisfied. Have a look what our clients said about us.</p>
-          <!-- Carousel Start-->
-          <ul class="owl-carousel testimonials list-unstyled equal-height">
-            <li class="item">
-              <div class="testimonial d-flex flex-wrap">
-                <div class="text">
-                  <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections.</p>
-                </div>
-                <div class="bottom d-flex align-items-center justify-content-between align-self-end">
-                  <div class="icon"><i class="fa fa-quote-left"></i></div>
-                  <div class="testimonial-info d-flex">
-                    <div class="title">
-                      <h5>John McIntyre</h5>
-                      <p>CEO, TransTech</p>
-                    </div>
-                    <div class="avatar"><img alt="" src="img/person-1.jpg" class="img-fluid"></div>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="item">
-              <div class="testimonial d-flex flex-wrap">
-                <div class="text">
-                  <p>The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. "What's happened to me? " he thought. It wasn't a dream.</p>
-                </div>
-                <div class="bottom d-flex align-items-center justify-content-between align-self-end">
-                  <div class="icon"><i class="fa fa-quote-left"></i></div>
-                  <div class="testimonial-info d-flex">
-                    <div class="title">
-                      <h5>John McIntyre</h5>
-                      <p>CEO, TransTech</p>
-                    </div>
-                    <div class="avatar"><img alt="" src="img/person-2.jpg" class="img-fluid"></div>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="item">
-              <div class="testimonial d-flex flex-wrap">
-                <div class="text">
-                  <p>His room, a proper human room although a little too small, lay peacefully between its four familiar walls.</p>
-                  <p>A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.</p>
-                </div>
-                <div class="bottom d-flex align-items-center justify-content-between align-self-end">
-                  <div class="icon"><i class="fa fa-quote-left"></i></div>
-                  <div class="testimonial-info d-flex">
-                    <div class="title">
-                      <h5>John McIntyre</h5>
-                      <p>CEO, TransTech</p>
-                    </div>
-                    <div class="avatar"><img alt="" src="img/person-3.png" class="img-fluid"></div>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="item">
-              <div class="testimonial d-flex flex-wrap">
-                <div class="text">
-                  <p>It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer. Gregor then turned to look out the window at the dull weather. Drops of rain could be heard hitting the pane, which made him feel quite sad.</p>
-                </div>
-                <div class="bottom d-flex align-items-center justify-content-between align-self-end">
-                  <div class="icon"><i class="fa fa-quote-left"></i></div>
-                  <div class="testimonial-info d-flex">
-                    <div class="title">
-                      <h5>John McIntyre</h5>
-                      <p>CEO, TransTech</p>
-                    </div>
-                    <div class="avatar"><img alt="" src="img/person-4.jpg" class="img-fluid"></div>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="item">
-              <div class="testimonial d-flex flex-wrap">
-                <div class="text">
-                  <p>It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer. Gregor then turned to look out the window at the dull weather. Drops of rain could be heard hitting the pane, which made him feel quite sad. Gregor then turned to look out the window at the dull weather. Drops of rain could be heard hitting the pane, which made him feel quite sad.</p>
-                </div>
-                <div class="bottom d-flex align-items-center justify-content-between align-self-end">
-                  <div class="icon"><i class="fa fa-quote-left"></i></div>
-                  <div class="testimonial-info d-flex">
-                    <div class="title">
-                      <h5>John McIntyre</h5>
-                      <p>CEO, TransTech</p>
-                    </div>
-                    <div class="avatar"><img alt="" src="img/person-1.jpg" class="img-fluid"></div>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <!-- Carousel End-->
-        </div>
-      </section>
-      <section style="background: url(img/fixed-background-2.jpg) center top no-repeat; background-size: cover;" class="bar no-mb color-white text-center bg-fixed relative-positioned">
-        <div class="dark-mask"></div>
-        <div class="container">
-          <div class="icon icon-outlined icon-lg"><i class="fa fa-file-code-o"></i></div>
-          <h3 class="text-uppercase">Do you want to see more?</h3>
-          <p class="lead">We have prepared for you more than 40 different HTML pages, including 5 variations of homepage.</p>
-          <p class="text-center"><a href="index2.html" class="btn btn-template-outlined-white btn-lg">See another homepage</a></p>
-        </div>
-      </section>
-      <section class="bg-white bar">
-        <div class="container">
-          <div class="heading text-center">
-            <h2>From the blog</h2>
-          </div>
-          <p class="lead">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. <a href="blog.html">Check our blog</a></p>
-          <div class="row">
-            <div class="col-lg-3">
-              <div class="home-blog-post">
-                <div class="image"><img src="img/portfolio-4.jpg" alt="..." class="img-fluid">
-                  <div class="overlay d-flex align-items-center justify-content-center"><a href="#" class="btn btn-template-outlined-white"><i class="fa fa-chain"> </i> Read More</a></div>
-                </div>
-                <div class="text">
-                  <h4><a href="#">Fashion Now </a></h4>
-                  <p class="author-category">By <a href="#">John Snow</a> in <a href="blog.html">Webdesign</a></p>
-                  <p class="intro">Fifth abundantly made Give sixth hath. Cattle creature i be don't them behold green moved fowl Moved life us beast good yielding. Have bring.</p><a href="#" class="btn btn-template-outlined">Continue Reading</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3">
-              <div class="home-blog-post">
-                <div class="image"><img src="img/portfolio-3.jpg" alt="..." class="img-fluid">
-                  <div class="overlay d-flex align-items-center justify-content-center"><a href="#" class="btn btn-template-outlined-white"><i class="fa fa-chain"> </i> Read More</a></div>
-                </div>
-                <div class="text">
-                  <h4><a href="#">What to do</a></h4>
-                  <p class="author-category">By <a href="#">John Snow</a> in <a href="blog.html">Webdesign</a></p>
-                  <p class="intro">Fifth abundantly made Give sixth hath. Cattle creature i be don't them behold green moved fowl Moved life us beast good yielding. Have bring.</p><a href="#" class="btn btn-template-outlined">Continue Reading</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3">
-              <div class="home-blog-post">
-                <div class="image"><img src="img/portfolio-5.jpg" alt="..." class="img-fluid">
-                  <div class="overlay d-flex align-items-center justify-content-center"><a href="#" class="btn btn-template-outlined-white"><i class="fa fa-chain"> </i> Read More</a></div>
-                </div>
-                <div class="text">
-                  <h4><a href="#">5 ways to look awesome</a></h4>
-                  <p class="author-category">By <a href="#">John Snow</a> in <a href="blog.html">Webdesign</a></p>
-                  <p class="intro">Fifth abundantly made Give sixth hath. Cattle creature i be don't them behold green moved fowl Moved life us beast good yielding. Have bring.</p><a href="#" class="btn btn-template-outlined">Continue Reading</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3">
-              <div class="home-blog-post">
-                <div class="image"><img src="img/portfolio-6.jpg" alt="..." class="img-fluid">
-                  <div class="overlay d-flex align-items-center justify-content-center"><a href="#" class="btn btn-template-outlined-white"><i class="fa fa-chain"> </i> Read More</a></div>
-                </div>
-                <div class="text">
-                  <h4><a href="#">Fashion Now </a></h4>
-                  <p class="author-category">By <a href="#">John Snow</a> in <a href="blog.html">Webdesign</a></p>
-                  <p class="intro">Fifth abundantly made Give sixth hath. Cattle creature i be don't them behold green moved fowl Moved life us beast good yielding. Have bring.</p><a href="#" class="btn btn-template-outlined">Continue Reading</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="bar bg-gray">
-        <div class="container">
-          <div class="heading text-center">
-            <h2>Our Clients</h2>
-          </div>
-          <ul class="list-unstyled owl-carousel customers no-mb">
-            <li class="item"><img src="img/customer-1.png" alt="" class="img-fluid"></li>
-            <li class="item"><img src="img/customer-2.png" alt="" class="img-fluid"></li>
-            <li class="item"><img src="img/customer-3.png" alt="" class="img-fluid"></li>
-            <li class="item"><img src="img/customer-4.png" alt="" class="img-fluid"></li>
-            <li class="item"><img src="img/customer-5.png" alt="" class="img-fluid"></li>
-            <li class="item"><img src="img/customer-6.png" alt="" class="img-fluid"></li>
-          </ul>
-        </div>
-      </section>
-      <!-- GET IT-->
-      <div class="get-it">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 text-center p-3">
-              <h3>Do you want cool website like this one?</h3>
-            </div>
-            <div class="col-lg-4 text-center p-3">   <a href="#" class="btn btn-template-outlined-white">Buy this template now</a></div>
-          </div>
-        </div>
-      </div>
-      
+
       <?php /* Footer */ include('include/footer.php'); ?>
     </div>
 
