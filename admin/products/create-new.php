@@ -16,7 +16,7 @@
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-  
+
   <!-- Navbar -->
   <?php include("../include/navbar.php"); ?>
 
@@ -47,7 +47,7 @@
     <section class="content">
       <div class="container-fluid">
 
-        <form method="POST" action="actions/create-product.php">
+        <form method="POST" action="actions/create-product.php" enctype="multipart/form-data">
           <!-- Primary information card -->
           <div class="card">
             <div class="card-header">
@@ -90,11 +90,11 @@
               </div>
               <div class="form-group">
                 <label for="images">Images</label>
-                <input type="file" multiple name="images" class="form-control" id="images">
+                <input type="file" multiple name="images[]" class="form-control" id="images">
               </div>
             </div>
           </div> <!-- /Primary information card -->
-          
+
           <!-- Stock and pricing information card -->
           <div class="card">
             <div class="card-header">
@@ -137,7 +137,7 @@
     </section>
     <!-- /.content -->
   </div>
-  
+
   <!-- Footer -->
   <?php include("../include/footer.php"); ?>
 

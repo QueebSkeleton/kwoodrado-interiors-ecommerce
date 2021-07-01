@@ -66,7 +66,7 @@
 
             $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
 
-            $products_result = mysqli_query($conn, "SELECT id, name, units_in_stock, is_enabled FROM product LIMIT 10");
+            $products_result = mysqli_query($conn, "SELECT id, name, units_in_stock, is_enabled FROM product");
           ?>
           <div class="card-body table-responsive p-0">
             <table class="table table-hover text-nowrap">
