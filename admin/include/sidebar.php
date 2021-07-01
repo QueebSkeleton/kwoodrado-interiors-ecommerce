@@ -102,13 +102,6 @@
             <p>Products</p>
           </a>
         </li>
-        <!-- Discounts -->
-        <li class="nav-item">
-          <a href="/admin/discounts/panel.php" class="nav-link">
-            <i class="nav-icon fas fa-percent"></i>
-            <p>Discounts</p>
-          </a>
-        </li>
         <!-- Categories -->
         <li class="nav-item">
           <a href="/admin/categories/panel.php" class="nav-link">

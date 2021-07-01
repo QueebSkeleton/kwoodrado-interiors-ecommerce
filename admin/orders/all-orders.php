@@ -17,6 +17,10 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="/admin/plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="/admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="/admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="/admin/dist/css/adminlte.min.css">
 </head>
@@ -55,18 +59,6 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">List of Orders</h3>
-
-            <div class="card-tools">
-              <div class="input-group input-group-sm" style="width: 150px;">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
           <!-- /.card-header -->
           <?php
@@ -81,61 +73,56 @@
               "last_name, placed_order.placed_in, placed_order.status FROM placed_order ".
               "LEFT JOIN customer ON customer.email_address = placed_order.customer_email_address");
           ?>
-          <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Placed by</th>
-                  <th>Date Made</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php
-                  if(mysqli_num_rows($orders_result) > 0):
-                    while($row = mysqli_fetch_assoc($orders_result)): ?>
-                <tr>
-                  <td><?= $row["id"] ?></td>
-                  <td><?= $row["first_name"]." ".$row["last_name"] ?></td>
-                  <td><?= date_format(date_create($row["placed_in"]), "M d, Y | h:m A") ?></td>
-                  <td><?= $row["status"] ?></td>
-                  <td>
-                    <div class="btn-group">
-                      <a href="view.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-info">
-                        <i class="fas fa-eye"></i> View
-                      </a>
-                      <a href="update-existing.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-primary">
-                        <i class="fas fa-edit"></i> Update
-                      </a>
-                      <a href="actions/delete-product.php?id=<?= $row["id"] ?>"
-                        class="btn btn-sm btn-danger btn-delete-product"
-                        onclick="return confirm('Proceed to delete order by: <?= $row["first_name"]." ".$row["last_name"] ?>?');">
-                        <i class="fas fa-trash"></i> Delete
-                      </a>
-                    </div>
-                  </td>
-                </tr>
-                <?php
-                  endwhile;
-                  else: ?>
-                <tr>
-                  <td colspan="5" class="text-center">There are no orders as of the moment.</td>
-                </tr>
-                <?php endif; ?>
-              </tbody>
-            </table>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover text-nowrap datatable">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Placed by</th>
+                    <th>Date Made</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                    if(mysqli_num_rows($orders_result) > 0):
+                      while($row = mysqli_fetch_assoc($orders_result)): ?>
+                  <tr>
+                    <td><?= $row["id"] ?></td>
+                    <td><?= $row["first_name"]." ".$row["last_name"] ?></td>
+                    <td><?= date_format(date_create($row["placed_in"]), "M d, Y | h:m A") ?></td>
+                    <td><?= $row["status"] ?></td>
+                    <td>
+                      <div class="btn-group">
+                        <a href="view.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-info">
+                          <i class="fas fa-eye"></i> View
+                        </a>
+                        <a href="update-existing.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-primary">
+                          <i class="fas fa-edit"></i> Update
+                        </a>
+                        <a href="actions/delete-product.php?id=<?= $row["id"] ?>"
+                          class="btn btn-sm btn-danger btn-delete-product"
+                          onclick="return confirm('Proceed to delete order by: <?= $row["first_name"]." ".$row["last_name"] ?>?');">
+                          <i class="fas fa-trash"></i> Delete
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                  <?php
+                    endwhile;
+                    else: ?>
+                  <tr>
+                    <td colspan="5" class="text-center">There are no orders as of the moment.</td>
+                  </tr>
+                  <?php endif; ?>
+                </tbody>
+              </table>
+            </div>
           </div>
           <!-- /.card-body -->
           <div class="card-footer clearfix">
-            <ul class="pagination pagination-sm m-0 float-right">
-              <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-            </ul>
           </div>
         </div>
         <?php mysqli_close($conn); ?>
@@ -161,7 +148,23 @@
 <script src="/admin/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="/admin/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="/admin/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="/admin/plugins/jszip/jszip.min.js"></script>
+<script src="/admin/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="/admin/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="/admin/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="/admin/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="/admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/admin/dist/js/adminlte.min.js"></script>
+<script>
+  $(".datatable").DataTable();
+</script>
 </body>
 </html>
