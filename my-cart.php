@@ -80,7 +80,7 @@
       <!-- Navbar Start-->
       <header class="nav-holder make-sticky">
         <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
-          <div class="container"><a href="index.html" class="navbar-brand home"><img src="img/Logo-v2.png" alt="Universal logo" class="d-inline-block" style="height: 40px;"><span class="sr-only">Universal - go to homepage</span></a>
+          <div class="container"><a href="/" class="navbar-brand home"><img src="img/Logo-v2.png" alt="Universal logo" class="d-inline-block" style="height: 40px;"><span class="sr-only">Universal - go to homepage</span></a>
             <button type="button" data-toggle="collapse" data-target="#navigation" class="navbar-toggler btn-template-outlined"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
             <div id="navigation" class="navbar-collapse collapse">
               <ul class="nav navbar-nav ml-auto">
@@ -195,7 +195,7 @@
                     </table>
                   </div>
                   <div class="box-footer d-flex justify-content-between align-items-center">
-                    <div class="left-col"><a href="shop-category.html" class="btn btn-secondary mt-0"><i class="fa fa-chevron-left"></i> Continue shopping</a></div>
+                    <div class="left-col"><a href="/shop.php" class="btn btn-secondary mt-0"><i class="fa fa-chevron-left"></i> Continue shopping</a></div>
                     <div class="right-col">
                       <button type="submit" class="btn btn-secondary"><i class="fa fa-refresh"></i> Update cart</button>
                       <a class="btn btn-template-outlined">Proceed to checkout <i class="fa fa-chevron-right"></i></a>
