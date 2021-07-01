@@ -116,6 +116,13 @@
             <p>Categories</p>
           </a>
         </li>
+        <!-- Logout -->
+        <li class="nav-item">
+          <a href="/admin/logout.php" class="nav-link">
+            <i class="nav-icon fas fa-reply"></i>
+            <p>Logout</p>
+          </a>
+        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
