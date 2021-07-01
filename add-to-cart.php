@@ -18,6 +18,7 @@
     public $product_name;
     public $product_image_name;
     public $final_unit_price;
+    public $units_in_stock;
     public $quantity;
     public $is_taxable;
     public $subtotal;
@@ -54,6 +55,7 @@
     $cartItem -> product_name = $row["name"];
     $cartItem -> product_image_name = $row["path"];
     $cartItem -> final_unit_price = $row["unit_price"];
+    $cartItem -> units_in_stock = $row["units_in_stock"];
     $cartItem -> is_taxable = $row["is_taxable"];
     $cartItem -> quantity = 1;
     $cartItem -> subtotal = $cartItem -> final_unit_price * $cartItem -> quantity;

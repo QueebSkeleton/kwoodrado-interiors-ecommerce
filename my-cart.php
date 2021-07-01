@@ -12,6 +12,7 @@
     public $product_name;
     public $product_image_name;
     public $final_unit_price;
+    public $units_in_stock;
     public $quantity;
     public $is_taxable;
     public $subtotal;
@@ -171,7 +172,7 @@
                           <td><a href="#"><?= $cart_item -> product_name ?></a></td>
                           <td>
                             <input type="hidden" name="productid[]" value="<?= $cart_item -> product_id ?>">
-                            <input type="number" name="quantity[]" min="1" value="<?= $cart_item -> quantity ?>" class="form-control">
+                            <input type="number" name="quantity[]" min="1" max="<?= $cart_item -> units_in_stock ?>" value="<?= $cart_item -> quantity ?>" class="form-control">
                           </td>
                           <td>Php<?= number_format($cart_item -> final_unit_price, 2) ?></td>
                           <td>Php<?= number_format($cart_item -> subtotal, 2) ?></td>

@@ -6,6 +6,7 @@
     public $product_name;
     public $product_image_name;
     public $final_unit_price;
+    public $units_in_stock;
     public $quantity;
     public $is_taxable;
     public $subtotal;

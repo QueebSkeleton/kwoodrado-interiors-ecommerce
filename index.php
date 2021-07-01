@@ -167,7 +167,7 @@
                 "product_image.local_filesystem_location AS image_location FROM product ".
                 "LEFT JOIN (SELECT DISTINCT(product_id), MIN(local_filesystem_location) AS local_filesystem_location ".
                 "FROM product_image GROUP BY product_id) AS product_image ON product_image.product_id = product.id ".
-                "WHERE DATE(product.added_on) >= SUBDATE(NOW(), 5) LIMIT 8");
+                "WHERE DATE(product.added_on) >= SUBDATE(NOW(), 5) AND product.units_in_stock > 0 AND product.is_enabled LIMIT 8");
 
               // Display all products
               while($row = mysqli_fetch_assoc($products_result)):

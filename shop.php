@@ -20,11 +20,11 @@
   $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
 
   if($category != NULL) {
-    $category_result = mysqli_query($conn, "SELECT product_category.*, COALESCE(COUNT(product.id), 0) AS total_product_count FROM product_category LEFT JOIN product ON product.category_name = product_category.name WHERE product_category.name = '".$category."'");
+    $category_result = mysqli_query($conn, "SELECT product_category.*, COALESCE(COUNT(product.id), 0) AS total_product_count FROM product_category LEFT JOIN product ON product.category_name = product_category.name WHERE product.is_enabled AND product.units_in_stock > 0 AND product_category.name = '".$category."'");
     $category_row = mysqli_fetch_assoc($category_result);
     $total_product_count = $category_row["total_product_count"];
   } else {
-    $category_result = mysqli_query($conn, "SELECT COALESCE(COUNT(product.id), 0) AS total_product_count FROM product");
+    $category_result = mysqli_query($conn, "SELECT COALESCE(COUNT(product.id), 0) AS total_product_count FROM product WHERE product.is_enabled AND product.units_in_stock > 0");
     $category_row = mysqli_fetch_assoc($category_result);
     $total_product_count = $category_row["total_product_count"];
   }
@@ -170,9 +170,9 @@
                 <?php
                   // Get products
                   if($category == NULL) {
-                    $products_result = mysqli_query($conn, "SELECT product.id, product.name, product.unit_price, product.compare_to_price, product_image.local_filesystem_location AS image_location FROM product LEFT JOIN (SELECT DISTINCT(product_id), MIN(local_filesystem_location) AS local_filesystem_location FROM product_image GROUP BY product_id) AS product_image ON product_image.product_id = product.id LIMIT ".$limit." OFFSET ".$offset);
+                    $products_result = mysqli_query($conn, "SELECT product.id, product.name, product.unit_price, product.compare_to_price, product_image.local_filesystem_location AS image_location FROM product LEFT JOIN (SELECT DISTINCT(product_id), MIN(local_filesystem_location) AS local_filesystem_location FROM product_image GROUP BY product_id) AS product_image ON product_image.product_id = product.id WHERE product.is_enabled AND product.units_in_stock > 0 LIMIT ".$limit." OFFSET ".$offset);
                   } else {
-                    $products_result = mysqli_query($conn, "SELECT product.id, product.name, product.unit_price, product.compare_to_price, product_image.local_filesystem_location AS image_location FROM product LEFT JOIN (SELECT DISTINCT(product_id), MIN(local_filesystem_location) AS local_filesystem_location FROM product_image GROUP BY product_id) AS product_image ON product_image.product_id = product.id WHERE product.category_name = '".$category."' LIMIT ".$limit." OFFSET ".$offset);
+                    $products_result = mysqli_query($conn, "SELECT product.id, product.name, product.unit_price, product.compare_to_price, product_image.local_filesystem_location AS image_location FROM product LEFT JOIN (SELECT DISTINCT(product_id), MIN(local_filesystem_location) AS local_filesystem_location FROM product_image GROUP BY product_id) AS product_image ON product_image.product_id = product.id WHERE product.is_enabled AND product.units_in_stock > 0 AND product.category_name = '".$category."' LIMIT ".$limit." OFFSET ".$offset);
                   }
 
                   while($row = mysqli_fetch_assoc($products_result)):
@@ -222,7 +222,7 @@
                   <ul class="nav nav-pills flex-column text-sm category-menu">
                     <?php
                       // Retrieve categories
-                      $categories_result = mysqli_query($conn, "SELECT product_category.name, COALESCE(product_results.total_count, 0) AS total_count FROM product_category LEFT JOIN (SELECT category_name, COUNT(id) AS total_count FROM product GROUP BY category_name) AS product_results ON product_results.category_name = product_category.name");
+                      $categories_result = mysqli_query($conn, "SELECT product_category.name, COALESCE(product_results.total_count, 0) AS total_count FROM product_category LEFT JOIN (SELECT category_name, COUNT(id) AS total_count FROM product WHERE is_enabled AND units_in_stock > 0 GROUP BY category_name) AS product_results ON product_results.category_name = product_category.name");
 
                       // Output as links
                       while($row = mysqli_fetch_assoc($categories_result)):

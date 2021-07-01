@@ -20,6 +20,8 @@
     public $category_name;
     public $description;
     public $unit_price;
+    public $units_in_stock;
+    public $is_enabled;
     public $image_filenames;
   }
 
@@ -40,8 +42,10 @@
     $product -> id = $first_row["id"];
     $product -> name = $first_row["name"];
     $product -> category_name = $first_row["category_name"];
+    $product -> units_in_stock = $first_row["units_in_stock"];
     $product -> description = $first_row["description"];
     $product -> unit_price = $first_row["unit_price"];
+    $product -> is_enabled = $first_row["is_enabled"];
     $product -> image_filenames = [];
 
     if(!is_null($first_row["local_filesystem_location"])) {
@@ -51,6 +55,12 @@
         if(!is_null($row["local_filesystem_location"]))
           $product -> image_filenames[] = $row["local_filesystem_location"];
     }
+  }
+
+  // If units in stock is 0, dont sell.
+  if($product -> units_in_stock <= 0 || !$product -> is_enabled) {
+    mysqli_close($conn);
+    die("This product cannot be sold at the moment.");
   }
 
 ?>
