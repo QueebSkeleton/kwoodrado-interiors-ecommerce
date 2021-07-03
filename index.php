@@ -49,7 +49,7 @@
                   <a href="my-orders.php" class="login-btn">
                     <i class="fa fa-truck"></i><span class="d-none d-md-inline-block">My orders</span>
                   </a>
-                  <a href="profile.php" class="signup-btn">
+                  <a href="my-profile.php" class="signup-btn">
                     <i class="fa fa-user"></i><span class="d-none d-md-inline-block">Profile</span>
                   </a>
                 </div>
