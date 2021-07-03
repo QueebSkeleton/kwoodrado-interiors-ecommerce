@@ -38,7 +38,7 @@
       "alert('Successfully saved credentials.'); ".
       "window.location.replace('/my-profile.php');</script></body></html>";
   } else {
-    unset($_SESSION["email_address"]);
+    session_destroy();
     echo "<html><body><script>".
       "alert('Successfully saved credentials. Please log in with your new email address.'); ".
       "window.location.replace('/login.php');</script></body></html>";

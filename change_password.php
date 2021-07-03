@@ -45,7 +45,7 @@
   }
 
   mysqli_close($conn);
-  unset($_SESSION["email_address"]);
+  session_destroy();
   die("<html><body><script>".
   "alert('Password has been successfully updated. Please log in with your new password.'); ".
   "window.location.replace('/login.php');</script></body></html>");

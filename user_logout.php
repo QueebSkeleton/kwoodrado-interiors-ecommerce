@@ -8,7 +8,7 @@
     "window.location.replace('/');</script></body></html>");
   }
 
-  unset($_SESSION["email_address"]);
+  session_destroy();
   die("<html><body><script>".
     "alert('Successfully logged out.'); ".
     "window.location.replace('/');</script></body></html>");
