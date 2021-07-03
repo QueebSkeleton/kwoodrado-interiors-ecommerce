@@ -213,9 +213,14 @@
   $pdf->Cell(64 ,5,'12%',1,1,'R');//end of line
 
   $pdf->Cell(90 ,5,'',0,0);
+  $pdf->Cell(25 ,5,'Delivery Fee',0,0);
+  $pdf->Cell(10 ,5,'Php',1,0);
+  $pdf->Cell(64 ,5,'Php100.00',1,1,'R');//end of line
+
+  $pdf->Cell(90 ,5,'',0,0);
   $pdf->Cell(25 ,5,'Total',0,0);
   $pdf->Cell(10 ,5,'Php',1,0);
-  $pdf->Cell(64 ,5,'Php'.number_format($placed_order -> total, 2),1,1,'R');//end of line
+  $pdf->Cell(64 ,5,'Php'.number_format($placed_order -> total + 100, 2),1,1,'R');//end of line
   //output the result
   $pdf->Output();
 ?>
