@@ -63,7 +63,7 @@
       $cart_item -> units_in_stock = $row["units_in_stock"];
       $cart_item -> is_taxable = $row["is_taxable"];
       $cart_item -> quantity = $quantity;
-      $cart_item -> subtotal = $cartItem -> final_unit_price * $cartItem -> quantity;
+      $cart_item -> subtotal = $cart_item -> final_unit_price * $cart_item -> quantity;
       $_SESSION["cart"][] = $cart_item;
     } else {
       $cart_item_product -> quantity = $quantity;

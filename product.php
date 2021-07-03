@@ -75,12 +75,14 @@
   }
 
   // Find if product already is in cart
-  foreach($_SESSION["cart"] as $cart_item) {
-    if($cart_item -> product_id == $product -> id) {
-      $product_in_cart = $cart_item;
+  $product_in_cart = NULL;
+  if(isset($_SESSION["cart"])) {
+    foreach($_SESSION["cart"] as $cart_item) {
+      if($cart_item -> product_id == $product -> id) {
+        $product_in_cart = $cart_item;
+      }
     }
   }
-
 ?>
 <!DOCTYPE html>
 <html>
