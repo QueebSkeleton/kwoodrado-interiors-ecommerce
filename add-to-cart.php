@@ -1,14 +1,14 @@
 <?php
   session_start();
 
-  // Only allow GET requests
-  if($_SERVER["REQUEST_METHOD"] != "GET") {
+  // Only allow POST requests
+  if($_SERVER["REQUEST_METHOD"] != "POST") {
     http_response_code(400);
-    die("Only GET requests are allowed.");
+    die("Only POST requests are allowed.");
   }
 
   // If id is not given, throw bad request
-  if(!isset($_GET["id"]) || empty($_GET["id"])) {
+  if(!isset($_POST["id"]) || empty($_POST["id"])) {
     http_response_code(400);
     die("Invalid product.");
   }
@@ -24,7 +24,8 @@
     public $subtotal;
   }
 
-  $id = $_GET["id"];
+  $id = $_POST["id"];
+  $quantity = $_POST["quantity"];
 
   // Parse config.ini file then get db credentials
   $config = parse_ini_file("../config.ini");
@@ -42,25 +43,31 @@
     $_SESSION["cart"] = [];
   } else {
     // If shopping cart already contains the product, dont proceed
+    $item_already_in_cart = False;
     foreach($_SESSION["cart"] as $cart_item) {
       if($cart_item -> product_id == $id) {
-        die("<html><body><script>alert('This item is already in your cart.'); window.location.replace('/shop.php?category=".$row["category_name"]."');</script></body></html>");
+        $item_already_in_cart = True;
+        $cart_item_product = $cart_item;
+        break;
       }
     }
   }
 
   if($row) {
-    $cartItem = new ShoppingCartItem();
-    $cartItem -> product_id = $id;
-    $cartItem -> product_name = $row["name"];
-    $cartItem -> product_image_name = $row["path"];
-    $cartItem -> final_unit_price = $row["unit_price"];
-    $cartItem -> units_in_stock = $row["units_in_stock"];
-    $cartItem -> is_taxable = $row["is_taxable"];
-    $cartItem -> quantity = 1;
-    $cartItem -> subtotal = $cartItem -> final_unit_price * $cartItem -> quantity;
-    $_SESSION["cart"][] = $cartItem;
-
+    if(!$item_already_in_cart) {
+      $cart_item = new ShoppingCartItem();
+      $cart_item -> product_id = $id;
+      $cart_item -> product_name = $row["name"];
+      $cart_item -> product_image_name = $row["path"];
+      $cart_item -> final_unit_price = $row["unit_price"];
+      $cart_item -> units_in_stock = $row["units_in_stock"];
+      $cart_item -> is_taxable = $row["is_taxable"];
+      $cart_item -> quantity = $quantity;
+      $cart_item -> subtotal = $cartItem -> final_unit_price * $cartItem -> quantity;
+      $_SESSION["cart"][] = $cart_item;
+    } else {
+      $cart_item_product -> quantity = $quantity;
+    }
     http_response_code(200);
   } else {
       http_response_code(400);

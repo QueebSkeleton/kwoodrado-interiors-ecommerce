@@ -3,7 +3,7 @@
 ==================================================================================
 ==================================================================================
 
-Universal Template 
+Universal Template
 
 https://bootstrapious.com/p/universal-business-e-commerce-template
 
@@ -1835,10 +1835,6 @@ table tr td {
   margin-top: 30px;
 }
 
-#productMain input {
-  display: none;
-}
-
 #productMain .sizes {
   text-align: center;
 }
@@ -3110,7 +3106,7 @@ STYLE SWITCHER FOR DEMO
 }
 
 /*
- * 3. TYPE  
+ * 3. TYPE
  */
 body {
   font-family: "Roboto", Helvetica, Arial, sans-serif;

@@ -25,6 +25,17 @@
     public $image_filenames;
   }
 
+  class ShoppingCartItem {
+    public $product_id;
+    public $product_name;
+    public $product_image_name;
+    public $final_unit_price;
+    public $units_in_stock;
+    public $quantity;
+    public $is_taxable;
+    public $subtotal;
+  }
+
   // Parse config.ini file then get db credentials
   $config = parse_ini_file("../config.ini");
 
@@ -61,6 +72,13 @@
   if($product -> units_in_stock <= 0 || !$product -> is_enabled) {
     mysqli_close($conn);
     die("This product cannot be sold at the moment.");
+  }
+
+  // Find if product already is in cart
+  foreach($_SESSION["cart"] as $cart_item) {
+    if($cart_item -> product_id == $product -> id) {
+      $product_in_cart = $cart_item;
+    }
   }
 
 ?>
@@ -211,9 +229,16 @@
                   <div class="box">
                     <h2 class="text-center"><?= $product -> name ?></h2>
                     <p class="price">Php<?= number_format($product -> unit_price, 2) ?></p>
-                    <p class="text-center">
-                      <a href="add-to-cart.php?id=<?= $product -> id ?>" class="btn btn-template-outlined"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                    </p>
+                    <div class="d-flex justify-content-center">
+                      <div class="col-6 text-center">
+                        <form method='post' action='add-to-cart.php'>
+                          <label>Qty:</label>
+                          <input type="hidden" name="id" value="<?= $product -> id ?>">
+                          <input type="number" name="quantity" class="form-control" min="1" max="<?= $product -> units_in_stock ?>" value="<?= is_null($product_in_cart) ? '1' : $product_in_cart -> quantity ?>"><br>
+                          <button type="submit" class="btn btn-template-outlined"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                        </form>
+                      </div>
+                    </div>
                   </div>
                   <div data-slider-id="1" class="owl-thumbs">
                     <?php if(empty($product -> image_filenames)): ?>
