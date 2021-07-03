@@ -99,12 +99,9 @@
                         <a href="view.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-info">
                           <i class="fas fa-eye"></i> View
                         </a>
-                        <a href="update-existing.php?id=<?= $row["id"] ?>" class="btn btn-sm btn-primary">
-                          <i class="fas fa-edit"></i> Update
-                        </a>
-                        <a href="actions/delete-product.php?id=<?= $row["id"] ?>"
+                        <a href="actions/delete-order.php?id=<?= $row["id"] ?>"
                           class="btn btn-sm btn-danger btn-delete-product"
-                          onclick="return confirm('Proceed to delete order by: <?= $row["first_name"]." ".$row["last_name"] ?>?');">
+                          onclick="return confirm('Proceed to delete order # <?= $row["id"] ?>?');">
                           <i class="fas fa-trash"></i> Delete
                         </a>
                       </div>

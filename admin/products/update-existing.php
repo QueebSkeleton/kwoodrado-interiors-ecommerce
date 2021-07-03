@@ -138,11 +138,11 @@
               </div>
               <div class="form-group">
                 <label for="unit_price">Unit Price</label>
-                <input type="number" name="unit_price" class="form-control" id="unit_price" placeholder="Enter unit price" value="<?= $product_row["unit_price"] ?>">
+                <input type="number" step="any" name="unit_price" class="form-control" id="unit_price" placeholder="Enter unit price" value="<?= $product_row["unit_price"] ?>">
               </div>
               <div class="form-group">
                 <label for="compare_to_price">Compare To Price</label>
-                <input type="number" name="compare_to_price" class="form-control" id="compare_to_price" placeholder="Enter price to compare to" value="<?= $product_row["compare_to_price"] ?>">
+                <input type="number" step="any" name="compare_to_price" class="form-control" id="compare_to_price" placeholder="Enter price to compare to" value="<?= $product_row["compare_to_price"] ?>">
               </div>
               <div class="form-group">
                 <label for="is_taxable">Is this product taxable?</label>

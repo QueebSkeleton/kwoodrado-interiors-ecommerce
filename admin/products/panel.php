@@ -66,7 +66,10 @@
 
             $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
 
-            $products_result = mysqli_query($conn, "SELECT id, name, units_in_stock, is_enabled FROM product");
+            $products_result = mysqli_query($conn, "SELECT product.id, product.name, product.stock_keeping_unit, product.units_in_stock, product.is_enabled, ".
+            "MIN(product_image.local_filesystem_location) AS image_filename FROM product ".
+            "LEFT JOIN product_image ON product_image.product_id = product.id ".
+            "GROUP BY product.id");
           ?>
           <div class="card-body">
             <div class="table-responsive">
@@ -74,8 +77,10 @@
                 <thead>
                   <tr>
                     <th>#</th>
+                    <th>Image</th>
                     <th>Product</th>
-                    <th>Inventory</th>
+                    <th>SKU</th>
+                    <th>Stock</th>
                     <th>Active</th>
                     <th>Actions</th>
                   </tr>
@@ -84,7 +89,11 @@
                   <?php while($row = mysqli_fetch_assoc($products_result)): ?>
                   <tr>
                     <td><?= $row["id"] ?></td>
+                    <td>
+                      <img src="<?= is_null($row["image_filename"]) ? "/img/empty-image.png" : "/product-images/".$row["image_filename"] ?>" style="height: 50px;">
+                    </td>
                     <td><?= $row["name"] ?></td>
+                    <td><?= $row["stock_keeping_unit"] ?></td>
                     <td><?= $row["units_in_stock"] ?> units in stock</td>
                     <td>
                       <?php if($row["is_enabled"]): ?>

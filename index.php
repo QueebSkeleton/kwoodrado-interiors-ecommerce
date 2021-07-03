@@ -29,31 +29,29 @@
                   <li class="list-inline-item"><a href="#"><i class="fa fa-phone"></i></a></li>
                   <li class="list-inline-item"><a href="#"><i class="fa fa-envelope"></i></a></li>
                 </ul>
-                <?php if(!isset($_SESSION["email_address"])): ?>
                 <div class="login">
                   <a href="my-cart.php" class="login-btn">
                     <i class="fa fa-shopping-cart"></i><span class="d-none d-md-inline-block">My cart</span>
                   </a>
+                  <?php if(!isset($_SESSION["email_address"])): ?>
                   <a href="#" data-toggle="modal" data-target="#login-modal" class="login-btn">
                     <i class="fa fa-sign-in"></i><span class="d-none d-md-inline-block">Sign In</span>
                   </a>
                   <a href="#" data-toggle="modal" data-target="#register-modal" class="signup-btn">
                     <i class="fa fa-user"></i><span class="d-none d-md-inline-block">Sign Up</span>
                   </a>
-                </div>
-                <?php else: ?>
-                <div class="login">
-                  <a href="my-cart.php" class="login-btn">
-                    <i class="fa fa-shopping-cart"></i><span class="d-none d-md-inline-block">My cart</span>
-                  </a>
+                  <?php else: ?>
                   <a href="my-orders.php" class="login-btn">
                     <i class="fa fa-truck"></i><span class="d-none d-md-inline-block">My orders</span>
                   </a>
                   <a href="my-profile.php" class="signup-btn">
                     <i class="fa fa-user"></i><span class="d-none d-md-inline-block">Profile</span>
                   </a>
+                  <?php endif; ?>
+                  <a href="/admin/login-form.php" class="login-btn">
+                    <i class="fa fa-users"></i><span class="d-none d-md-inline-block">Owner</span>
+                  </a>
                 </div>
-                <?php endif; ?>
                 <ul class="social-custom list-inline">
                   <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
                   <li class="list-inline-item"><a href="#"><i class="fa fa-google-plus"></i></a></li>

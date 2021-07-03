@@ -123,11 +123,11 @@
               </div>
               <div class="form-group">
                 <label for="unit_price">Unit Price</label>
-                <input type="number" name="unit_price" class="form-control" id="unit_price" placeholder="Enter unit price">
+                <input type="number" step="any" name="unit_price" class="form-control" id="unit_price" placeholder="Enter unit price">
               </div>
               <div class="form-group">
                 <label for="compare_to_price">Compare To Price</label>
-                <input type="number" name="compare_to_price" class="form-control" id="compare_to_price" placeholder="Enter price to compare to">
+                <input type="number" step="any" name="compare_to_price" class="form-control" id="compare_to_price" placeholder="Enter price to compare to">
               </div>
               <div class="form-group">
                 <label for="is_taxable">Is this product taxable?</label>
