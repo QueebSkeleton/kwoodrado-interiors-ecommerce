@@ -38,12 +38,13 @@
 
   $row = mysqli_fetch_assoc($result);
 
+  // If shopping cart already contains the product, dont proceed
+  $item_already_in_cart = False;
+
   // If shopping cart is not set yet, initialize as empty array
   if(!isset($_SESSION["cart"])) {
     $_SESSION["cart"] = [];
   } else {
-    // If shopping cart already contains the product, dont proceed
-    $item_already_in_cart = False;
     foreach($_SESSION["cart"] as $cart_item) {
       if($cart_item -> product_id == $id) {
         $item_already_in_cart = True;
