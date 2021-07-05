@@ -108,7 +108,7 @@
   $placed_order -> sale_without_tax = $placed_order -> total - $placed_order -> tax;
 ?>
 <div class="modal-header">
-  <h4 class="modal-title">Finalize and Deliver</h4>
+  <h4 class="modal-title">Deny this order</h4>
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -182,8 +182,12 @@
     <input type="text" readonly value="<?= number_format($placed_order -> sale_without_tax, 2) ?>" class="form-control">
   </div>
   <div class="form-group">
+    <label>Delivery Fee:</label>
+    <input type="text" readonly value="100.00" class="form-control">
+  </div>
+  <div class="form-group">
     <label>Customer Total:</label>
-    <input type="text" readonly value="<?= number_format($placed_order -> total, 2) ?>" class="form-control">
+    <input type="text" readonly value="<?= number_format($placed_order -> total + 100, 2) ?>" class="form-control">
   </div>
 </div>
 <div class="modal-footer justify-content-between">

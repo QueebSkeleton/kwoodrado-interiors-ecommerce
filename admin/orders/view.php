@@ -267,22 +267,28 @@
                   </tbody>
                 </table>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label for="sale_without_tax">Sales Made with this Order:</label>
                   <input type="text" class="form-control" id="sale_without_tax" value="<?= number_format($placed_order -> sale_without_tax, 2) ?>" readonly>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label for="tax">Tax from Taxable Items:</label>
                   <input type="text" class="form-control" id="tax" value="<?= number_format($placed_order -> tax, 2) ?>" readonly>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="total">Delivery Fee:</label>
+                  <input type="text" class="form-control" id="total" value="100.00" readonly>
+                </div>
+              </div>
+              <div class="col-md-3">
                 <div class="form-group">
                   <label for="total">Total:</label>
-                  <input type="text" class="form-control" id="total" value="<?= number_format($placed_order -> total, 2) ?>" readonly>
+                  <input type="text" class="form-control" id="total" value="<?= number_format($placed_order -> total + 100, 2) ?>" readonly>
                 </div>
               </div>
             </div>

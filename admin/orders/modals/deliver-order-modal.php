@@ -183,8 +183,12 @@
     <input type="text" readonly value="<?= number_format($placed_order -> sale_without_tax, 2) ?>" class="form-control">
   </div>
   <div class="form-group">
+    <label>Delivery Fee:</label>
+    <input type="text" readonly value="100.00" class="form-control">
+  </div>
+  <div class="form-group">
     <label>Customer Total:</label>
-    <input type="text" readonly value="<?= number_format($placed_order -> total, 2) ?>" class="form-control">
+    <input type="text" readonly value="<?= number_format($placed_order -> total + 100, 2) ?>" class="form-control">
   </div>
 </div>
 <div class="modal-footer justify-content-between">
