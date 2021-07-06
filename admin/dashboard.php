@@ -131,7 +131,7 @@ GROUP BY DATE(placed_order.placed_in)");
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="/admin/orders/new-orders.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -146,7 +146,7 @@ GROUP BY DATE(placed_order.placed_in)");
               <div class="icon">
                 <i class="fas fa-shopping-cart"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="/admin/orders/processing-orders.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -161,7 +161,7 @@ GROUP BY DATE(placed_order.placed_in)");
               <div class="icon">
                 <i class="fas fa-users"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="/admin/customers/panel.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->

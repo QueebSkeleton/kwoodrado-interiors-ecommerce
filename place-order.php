@@ -1,8 +1,12 @@
 <?php
 session_start();
 
-if(!isset($_SESSION["email_address"])){
-    die("<html><body><script>alert('Please log-in first before checking out'); window.location.replace('/login.php');</script></body></html>"); 
+if(!(isset($_SESSION["cart"]) && count($_SESSION["cart"]) > 0)) {
+  die("<html><body><script>alert('Your cart is empty. Place items first.'); window.location.replace('/shop.php');</script></body></html>");
+}
+
+if(!isset($_SESSION["email_address"])) {
+  die("<html><body><script>alert('Please log-in first before checking out.'); window.location.replace('/login.php');</script></body></html>");
 }
 
   // Parse configuration file
