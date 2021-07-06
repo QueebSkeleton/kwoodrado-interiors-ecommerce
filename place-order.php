@@ -253,7 +253,7 @@ class ShoppingCartItem {
                     <div class="box-footer d-flex flex-wrap align-items-center justify-content-between">
                       <div class="left-col"><a href="shop-basket.html" class="btn btn-secondary mt-0"><i class="fa fa-chevron-left"></i>Back to basket</a></div>
                       <div class="right-col">
-                        <button type="submit" class="btn btn-template-main">Continue to Delivery Method<i class="fa fa-chevron-right"></i></button>
+                        <button type="submit" class="btn btn-template-main">Place Order<i class="fa fa-chevron-right"></i></button>
                       </div>
                     </div>
                   </form>
