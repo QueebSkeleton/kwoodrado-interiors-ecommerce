@@ -198,7 +198,7 @@
                     <div class="left-col"><a href="/shop.php" class="btn btn-secondary mt-0"><i class="fa fa-chevron-left"></i> Continue shopping</a></div>
                     <div class="right-col">
                       <button type="submit" class="btn btn-secondary"><i class="fa fa-refresh"></i> Update cart</button>
-                      <a class="btn btn-template-outlined">Proceed to checkout <i class="fa fa-chevron-right"></i></a>
+                      <a href="place-order.php" class="btn btn-template-outlined">Proceed to checkout <i class="fa fa-chevron-right"></i></a>
                     </div>
                   </div>
                 </form>
