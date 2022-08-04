@@ -38,3 +38,29 @@ data.
 
 (Not Yet Final)
 ![image](https://user-images.githubusercontent.com/57407875/118975651-d12c8e80-b9a6-11eb-942a-18d0e7341198.png)
+
+## Instructions to Install
+
+Install the following beforehand:
+
+1. XAMPP - includes both Apache Web Server and a MariaDB instance.
+
+To make this run locally on your machine, do:
+
+1. Download the repository, then extract it inside your XAMPP's htdocs folder. It should look like the following:<br>
+`C:\path\to\xampp\htdocs\kwoodrado-interiors-ecommerce`.
+1. Initialize your database by executing the `schema.sql` file on your DBMS. It already includes a CREATE DATABASE
+statement with the name `kwoodrado_db` so simply plug the SQL file to create everything.
+1. Create a `config.ini` file with the following keys:<br>
+`db_server` - server IP address e.g `localhost:8000`<br>
+`db_user` - dbms instance user associated with the application<br>
+`db_password` - password of the user<br>
+`db_name` - name of the database to be used by the application i.e `kwoodrado_db`<br>
+Place this file inside your htdocs root folder, not inside your application. It should look like the following:<br>
+`C:\path\to\xampp\htdocs\config.ini`
+1. Finally, configure your XAMPP `DocumentRoot` setting to the application folder. Sample is the following:<br>
+`DocumentRoot "C:/xampp/htdocs/kwoodrado-interiors-ecommerce"`
+
+Then, the instance will now run on your local machine. Endpoints are:<br>
+`localhost` - the index page of the application
+`localhost/admin/dashboard.php` - dashboard. Should redirect you to a login form when not logged in yet.
