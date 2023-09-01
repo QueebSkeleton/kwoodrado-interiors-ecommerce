@@ -15,12 +15,10 @@
   $email_address = $_POST["email_address"];
   $password = $_POST["password"];
 
-  // Parse config file
-  $config = parse_ini_file("../config.ini");
-
   // Get connection
-  $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
-
+  require_once($_SERVER["DOCUMENT_ROOT"]."/dbconnection.php");
+  $conn = get_connection();
+  
   // Fetch user
   $result = mysqli_query($conn, "SELECT * FROM customer WHERE email_address = '$email_address' AND password = '$password'");
 

@@ -72,10 +72,9 @@
                   <option value="">None</option>
                   <?php
                     // Get all categories from database then output as option tags
-                    // Parse config.ini file then get db credentials
-                    $config = parse_ini_file("../../../config.ini");
                     // Create connection to db
-                    $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
+                    require_once($_SERVER["DOCUMENT_ROOT"]."/dbconnection.php");
+                    $conn = get_connection();
                     // Get all categories
                     $categories_result = mysqli_query($conn, "SELECT name FROM product_category");
 

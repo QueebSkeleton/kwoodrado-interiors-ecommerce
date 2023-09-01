@@ -20,11 +20,8 @@
 
   require("../classes/Order.php");
 
-  // Parse configuration file
-  $config = parse_ini_file("../../../../config.ini");
-
   // Create connection to database
-  $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
+  $conn = require_once($_SERVER["DOCUMENT_ROOT"]."/dbconnection.php");
 
   // Fetch order by id
   $order_result = mysqli_query($conn, "SELECT customer.first_name, customer.last_name, customer.phone_number,".

@@ -56,11 +56,9 @@
       <div class="container-fluid">
 
         <?php
-            // Parse config file, get db credentials
-            $config = parse_ini_file("../../../config.ini");
-
             // Create connection to database
-            $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
+            require_once($_SERVER["DOCUMENT_ROOT"]."/dbconnection.php");
+            $conn = get_connection();
 
             // Prepare product select statement
             $select_stmt = mysqli_prepare($conn, "SELECT * FROM product WHERE id = ?");

@@ -28,11 +28,9 @@
 
   // TODO: Add validation layer
 
-  // Parse config.ini file then get db credentials
-  $config = parse_ini_file("../../../../config.ini");
-
   // Get connection
-  $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
+  require_once($_SERVER["DOCUMENT_ROOT"]."/dbconnection.php");
+  $conn = get_connection();
 
   // Prepare update statement
   $update_stmt = mysqli_prepare($conn, "UPDATE `product` SET `category_name`=?,".

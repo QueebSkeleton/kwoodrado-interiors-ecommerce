@@ -20,11 +20,9 @@
   $last_name = $_POST["last_name"];
   $phone_number = $_POST["phone_number"];
 
-  // Parse configuration file
-  $config = parse_ini_file("../config.ini");
-
   // Create connection to database
-  $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
+  require_once($_SERVER["DOCUMENT_ROOT"]."/dbconnection.php");
+  $conn = get_connection();
 
   if(!mysqli_query($conn, "UPDATE customer SET first_name = '$first_name', last_name = '$last_name', email_address = '$email_address', phone_number = '$phone_number' WHERE email_address = '$current_email_address'")) {
     mysqli_close($conn);

@@ -62,9 +62,8 @@
           </div>
           <!-- /.card-header -->
           <?php
-            $config = parse_ini_file("../../../config.ini");
-
-            $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
+            require_once($_SERVER["DOCUMENT_ROOT"]."/dbconnection.php");
+            $conn = get_connection();
 
             $products_result = mysqli_query($conn, "SELECT product.id, product.name, product.stock_keeping_unit, product.units_in_stock, product.is_enabled, ".
             "MIN(product_image.local_filesystem_location) AS image_filename FROM product ".

@@ -12,12 +12,10 @@
   $password_new = $_POST["password_new"];
   $password_new_retype = $_POST["password_new_retype"];
 
-  // Parse configuration file
-  $config = parse_ini_file("../config.ini");
-
   // Create connection to database
-  $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
-
+  require_once($_SERVER["DOCUMENT_ROOT"]."/dbconnection.php");
+  $conn = get_connection();
+  
   // Retrieve current password from database
   $email_address = $_SESSION["email_address"];
   $user_result = mysqli_query($conn, "SELECT password FROM customer WHERE email_address = '$email_address'");

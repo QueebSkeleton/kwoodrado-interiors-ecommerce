@@ -20,11 +20,9 @@
   $email_address = $_POST["email_address"];
   $password = $_POST["password"];
 
-  // Parse config.ini file then get db credentials
-  $config = parse_ini_file("../../../../config.ini");
-
   // Get connection
-  $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
+  require_once($_SERVER["DOCUMENT_ROOT"]."/dbconnection.php");
+  $conn = get_connection();
 
   // Prepare insert statement
   $insert_stmt = mysqli_prepare($conn, "INSERT INTO `customer`(`first_name`, `last_name`, `phone_number`, `email_address`,".

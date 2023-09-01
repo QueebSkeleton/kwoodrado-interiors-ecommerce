@@ -17,12 +17,10 @@
   $email_address = $_SESSION["email_address"];
   $address = $_POST["address"];
 
-  // Parse configuration file
-  $config = parse_ini_file("../config.ini");
-
   // Create connection to database
-  $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
-
+  require_once($_SERVER["DOCUMENT_ROOT"]."/dbconnection.php");
+  $conn = get_connection();
+  
   if(!mysqli_query($conn, "INSERT INTO customer_address VALUES ('$email_address', '$address')")) {
     mysqli_close($conn);
     die("<html><body><script>".

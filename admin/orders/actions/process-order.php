@@ -26,11 +26,9 @@
   // Tell mysqli to throw exceptions
   mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-  // Parse configuration file
-  $config = parse_ini_file("../../../../config.ini");
-
   // Create connection to database
-  $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
+  require_once($_SERVER["DOCUMENT_ROOT"]."/dbconnection.php");
+  $conn = get_connection();
 
   // Select order items of this order
   $order_item_result = mysqli_query($conn, "SELECT `placed_order_item`.`product_id`, `placed_order_item`.`quantity` FROM `placed_order`".

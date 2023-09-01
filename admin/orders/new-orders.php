@@ -63,11 +63,9 @@
           </div>
           <!-- /.card-header -->
           <?php
-            // Parse configuration file
-            $config = parse_ini_file("../../../config.ini");
-
             // Create connection to database
-            $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
+            require_once($_SERVER["DOCUMENT_ROOT"]."/dbconnection.php");
+            $conn = get_connection();
 
             // Retrieve orders
             $orders_result = mysqli_query($conn, "SELECT placed_order.id, customer.first_name, customer.".

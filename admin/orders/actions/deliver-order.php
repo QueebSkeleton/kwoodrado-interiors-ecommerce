@@ -20,11 +20,9 @@
   // Tell mysqli to throw exceptions
   mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-  // Parse configuration file
-  $config = parse_ini_file("../../../../config.ini");
-
   // Create connection to database
-  $conn = mysqli_connect($config["db_server"], $config["db_user"], $config["db_password"], $config["db_name"]);
+  require_once($_SERVER["DOCUMENT_ROOT"]."/dbconnection.php");
+  $conn = get_connection();
 
   try {
     // Update the status of the order to DELIVERED
