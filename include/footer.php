@@ -1,36 +1,44 @@
 <!-- FOOTER -->
 <footer class="main-footer">
   <div class="container">
-    <div class="row">
+    <div class="row justify-content-center">
       <div class="col-lg-4">
         <h4 class="h6">About Us</h4>
         <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-        <hr>
+        <h4 class="h6">Visit Us on Social Media</h4>
+        <ul class="social list-inline">
+          <li class="list-inline-item">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+          </li>
+          <li class="list-inline-item">
+            <a href="#"><i class="fa fa-google-plus"></i></a>
+          </li>
+          <li class="list-inline-item">
+            <a href="#"><i class="fa fa-twitter"></i></a>
+          </li>
+        </ul>
+        <hr class="d-block d-lg-none">
+      </div>
+      <div class="col-lg-3">
+        <h4 class="h6">Address</h4>
+        <p class="text-uppercase"><strong>Kwoodrado Interiors</strong><br>123 Lorem Ipsum <br>Some test Address <br>Taguig <br>NCR <br><strong>Philippines</strong></p>
+        <a href="contact.php" class="btn btn-template-main">Chat a Support</a>
+      </div>
+      <div class="col-lg-5">
         <h4 class="h6">Join Our Monthly Newsletter</h4>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Maecenas odio ante, fringilla a rhoncus ut, mattis non massa.
+        </p>
         <form>
           <div class="input-group">
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" placeholder="Enter your email here...">
             <div class="input-group-append">
               <button type="button" class="btn btn-secondary"><i class="fa fa-send"></i></button>
             </div>
           </div>
         </form>
         <hr class="d-block d-lg-none">
-      </div>
-      <div class="col-lg-4">
-        <h4 class="h6">Contact</h4>
-        <p class="text-uppercase"><strong>Kwoodrado Interiors</strong><br>123 Lorem Ipsum <br>Some test Address <br>Taguig <br>NCR <br><strong>Philippines</strong></p><a href="contact.php" class="btn btn-template-main">Go to contact page</a>
-        <hr class="d-block d-lg-none">
-      </div>
-      <div class="col-lg-4">
-        <ul class="list-inline photo-stream">
-          <li class="list-inline-item"><a href="#"><img src="img/footer-1.jpg" alt="..." class="img-fluid"></a></li>
-          <li class="list-inline-item"><a href="#"><img src="img/footer-2.jpeg" alt="..." class="img-fluid"></a></li>
-          <li class="list-inline-item"><a href="#"><img src="img/footer-3.jpg" alt="..." class="img-fluid"></a></li>
-          <li class="list-inline-item"><a href="#"><img src="img/footer-4.jpg" alt="..." class="img-fluid"></a></li>
-          <li class="list-inline-item"><a href="#"><img src="img/footer-5.jpg" alt="..." class="img-fluid"></a></li>
-          <li class="list-inline-item"><a href="#"><img src="img/footer-6.jpg" alt="..." class="img-fluid"></a></li>
-        </ul>
       </div>
     </div>
   </div>

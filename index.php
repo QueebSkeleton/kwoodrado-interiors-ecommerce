@@ -12,7 +12,6 @@
   <body>
     <div id="all">
       <?php
-        include("include/topbar.php");
         include("include/navbar.php");
       ?>
 
@@ -25,18 +24,22 @@
               <div class="homepage owl-carousel">
                 <div class="item">
                   <div class="row">
-                    <div class="col-md-5 text-right">
+                    <div class="col-md-7 text-right px-4">
                       <p><img src="img/Logo-v2.png" alt="" class="ml-auto"></p>
                       <h1>Your wooden furniture store</h1>
                       <p>Crafstmanship. Elegance.<br>Tables. Chairs. E-commerce.</p>
+                    </div> 
+                    <div class="col-md-5 px-4">
+                      <img src="img/carousel-1.png" alt="" class="img-fluid">
                     </div>
-                    <div class="col-md-7"><img src="img/carousel-1.png" alt="" class="img-fluid"></div>
                   </div>
                 </div>
                 <div class="item">
                   <div class="row">
-                    <div class="col-md-7 text-center"><img src="img/carousel-2.png" alt="" class="img-fluid"></div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 px-4">
+                      <img src="img/carousel-2.png" alt="" class="img-fluid">
+                    </div>
+                    <div class="col-md-7 px-4">
                       <h2>Wide selection range of furniture</h2>
                       <ul class="list-unstyled">
                         <li>Dining sets</li>
@@ -56,7 +59,7 @@
       <section class="bar background-white">
         <div class="container text-center">
           <h1 class="h2 mb-4">NEW PRODUCTS</h1>
-          <div class="row products products-big">
+          <div class="row justify-content-center products products-big">
             <?php
               // Get new products (products added 5 days ago)
               $products_result = mysqli_query($conn,
@@ -64,12 +67,12 @@
                 "product_image.local_filesystem_location AS image_location FROM product ".
                 "LEFT JOIN (SELECT DISTINCT(product_id), MIN(local_filesystem_location) AS local_filesystem_location ".
                 "FROM product_image GROUP BY product_id) AS product_image ON product_image.product_id = product.id ".
-                "WHERE DATE(product.added_on) >= SUBDATE(NOW(), 5) AND product.units_in_stock > 0 AND product.is_enabled LIMIT 8");
+                "WHERE DATE(product.added_on) >= SUBDATE(NOW(), 5) AND product.units_in_stock > 0 AND product.is_enabled LIMIT 6");
 
               // Display all products
               while($row = mysqli_fetch_assoc($products_result)):
             ?>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-md-6 col-lg-4">
               <div class="product">
                 <div class="image"><a href="product.php?id=<?= $row["id"] ?>"><img src="<?= is_null($row["image_location"]) ? "/img/empty-image.png" : "/product-images/".$row["image_location"] ?>" alt="" class="img-fluid image1"></a></div>
                 <div class="text">
@@ -98,21 +101,30 @@
               <div class="box-simple">
                 <div class="icon-outlined"><i class="fa fa-desktop"></i></div>
                 <h3 class="h4">Elegance</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas odio ante, fringilla a rhoncus ut, mattis non massa. Sed arcu nisl, posuere id faucibus et, condimentum sed nunc. Proin vitae luctus enim, a volutpat risus. Nullam finibus, mauris quis venenatis viverra, quam purus imperdiet purus, ac bibendum magna eros vitae dolor. Fusce a ultricies leo, ut mattis arcu.</p>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Maecenas odio ante, fringilla a rhoncus ut, mattis non massa.
+                </p>
               </div>
             </div>
             <div class="col-lg-4 col-md-6">
               <div class="box-simple">
                 <div class="icon-outlined"><i class="fa fa-print"></i></div>
                 <h3 class="h4">Aesthetic</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas odio ante, fringilla a rhoncus ut, mattis non massa. Sed arcu nisl, posuere id faucibus et, condimentum sed nunc. Proin vitae luctus enim, a volutpat risus. Nullam finibus, mauris quis venenatis viverra, quam purus imperdiet purus, ac bibendum magna eros vitae dolor. Fusce a ultricies leo, ut mattis arcu.</p>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Maecenas odio ante, fringilla a rhoncus ut, mattis non massa.
+                </p>
               </div>
             </div>
             <div class="col-lg-4 col-md-6">
               <div class="box-simple">
                 <div class="icon-outlined"><i class="fa fa-globe"></i></div>
                 <h3 class="h4">Craftsmanship</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas odio ante, fringilla a rhoncus ut, mattis non massa. Sed arcu nisl, posuere id faucibus et, condimentum sed nunc. Proin vitae luctus enim, a volutpat risus. Nullam finibus, mauris quis venenatis viverra, quam purus imperdiet purus, ac bibendum magna eros vitae dolor. Fusce a ultricies leo, ut mattis arcu.</p>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Maecenas odio ante, fringilla a rhoncus ut, mattis non massa.
+                </p>
               </div>
             </div>
           </div>
@@ -121,21 +133,30 @@
               <div class="box-simple">
                 <div class="icon-outlined"><i class="fa fa-lightbulb-o"></i></div>
                 <h3 class="h4">New ideas</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas odio ante, fringilla a rhoncus ut, mattis non massa. Sed arcu nisl, posuere id faucibus et, condimentum sed nunc. Proin vitae luctus enim, a volutpat risus. Nullam finibus, mauris quis venenatis viverra, quam purus imperdiet purus, ac bibendum magna eros vitae dolor. Fusce a ultricies leo, ut mattis arcu.</p>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Maecenas odio ante, fringilla a rhoncus ut, mattis non massa.
+                </p>
               </div>
             </div>
             <div class="col-lg-4 col-md-6">
               <div class="box-simple">
                 <div class="icon-outlined"><i class="fa fa-envelope-o"></i></div>
                 <h3 class="h4">Newsletter</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas odio ante, fringilla a rhoncus ut, mattis non massa. Sed arcu nisl, posuere id faucibus et, condimentum sed nunc. Proin vitae luctus enim, a volutpat risus. Nullam finibus, mauris quis venenatis viverra, quam purus imperdiet purus, ac bibendum magna eros vitae dolor. Fusce a ultricies leo, ut mattis arcu.</p>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Maecenas odio ante, fringilla a rhoncus ut, mattis non massa.
+                </p>
               </div>
             </div>
             <div class="col-lg-4 col-md-6">
               <div class="box-simple">
                 <div class="icon-outlined"><i class="fa fa-user"></i></div>
                 <h3 class="h4">Creativity</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas odio ante, fringilla a rhoncus ut, mattis non massa. Sed arcu nisl, posuere id faucibus et, condimentum sed nunc. Proin vitae luctus enim, a volutpat risus. Nullam finibus, mauris quis venenatis viverra, quam purus imperdiet purus, ac bibendum magna eros vitae dolor. Fusce a ultricies leo, ut mattis arcu.</p>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Maecenas odio ante, fringilla a rhoncus ut, mattis non massa.
+                </p>
               </div>
             </div>
           </div>

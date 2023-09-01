@@ -20,7 +20,6 @@
   <body>
     <div id="all">
       <?php
-        include("include/topbar.php");
         include("include/navbar.php");
       ?>
 

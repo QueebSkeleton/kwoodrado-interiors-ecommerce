@@ -11,9 +11,10 @@ if(!isset($_SESSION["email_address"])) {
 
 $user_logged_in_email = $_SESSION["email_address"];
 
-  // Create connection to database
-  require_once($_SERVER["DOCUMENT_ROOT"]."/dbconnection.php");
-  $conn = get_connection();
+// Create connection to database
+require_once($_SERVER["DOCUMENT_ROOT"]."/dbconnection.php");
+$conn = get_connection();
+
 $sql = "SELECT first_name, last_name, email_address, phone_number FROM customer WHERE email_address = '$user_logged_in_email'";
 $result = $conn->query($sql);
 $customer_row = $result->fetch_assoc();
@@ -45,7 +46,6 @@ class ShoppingCartItem {
   <body>
     <div id="all">
       <?php
-        include("include/topbar.php");
         include("include/navbar.php");
       ?>
 
