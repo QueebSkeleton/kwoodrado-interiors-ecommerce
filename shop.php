@@ -42,11 +42,22 @@
 
       <div id="heading-breadcrumbs">
         <div class="container">
-          <div class="row d-flex align-items-center flex-wrap">
-            <div class="col-md-7">
-              <h1 class="h2"><?= $category == NULL ? "All Products" : $category; ?></h1>
+          <div class="row d-flex align-items-center">
+            <div class="col-md-3">
+              <select class="form-control" id="categorySelect">
+                <option value="" <?= !isset($_GET["category"]) ? "selected" : "" ?>>All Products</option>
+                <?php
+                  // Retrieve categories
+                  $categories_result = mysqli_query($conn, "SELECT product_category.name, COALESCE(product_results.total_count, 0) AS total_count FROM product_category LEFT JOIN (SELECT category_name, COUNT(id) AS total_count FROM product WHERE is_enabled AND units_in_stock > 0 GROUP BY category_name) AS product_results ON product_results.category_name = product_category.name");
+
+                  // Output as links
+                  while($row = mysqli_fetch_assoc($categories_result)):
+                ?>
+                <option value="<?= $row["name"] ?>" <?= $row["name"] == $_GET["category"] ? "selected" : "" ?>><?= $row["name"] ?></option>
+                <?php endwhile; ?>
+              </select>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-9">
               <ul class="breadcrumb d-flex justify-content-end">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
                 <li class="breadcrumb-item active"><?= $category == NULL ? "All Products" : $category; ?></li>
@@ -111,26 +122,6 @@
               </div>
             </div>
             <div class="col-md-3">
-              <!-- MENUS AND FILTERS-->
-              <div class="panel panel-default sidebar-menu">
-                <div class="panel-heading">
-                  <h3 class="h4 panel-title">Categories</h3>
-                </div>
-                <div class="panel-body">
-                  <ul class="nav nav-pills flex-column text-sm category-menu">
-                    <?php
-                      // Retrieve categories
-                      $categories_result = mysqli_query($conn, "SELECT product_category.name, COALESCE(product_results.total_count, 0) AS total_count FROM product_category LEFT JOIN (SELECT category_name, COUNT(id) AS total_count FROM product WHERE is_enabled AND units_in_stock > 0 GROUP BY category_name) AS product_results ON product_results.category_name = product_category.name");
-
-                      // Output as links
-                      while($row = mysqli_fetch_assoc($categories_result)):
-                    ?>
-                    <li class="nav-item"><a href="shop.php?category=<?= $row["name"] ?>" class="nav-link d-flex align-items-center justify-content-between"><span><?= $row["name"] ?> </span><span class="badge badge-secondary"><?= $row["total_count"] ?></span></a>
-                    </li>
-                    <?php endwhile; ?>
-                  </ul>
-                </div>
-              </div>
               <div class="banner"><a href="shop-category.html"><img src="img/banner.jpg" alt="sales 2014" class="img-fluid"></a></div>
             </div>
           </div>

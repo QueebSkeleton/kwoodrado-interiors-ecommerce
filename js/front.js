@@ -292,4 +292,13 @@ $(function () {
         }
     });
 
+    // Category select on change
+    $("#categorySelect").change(function() {
+        let category = $(this).val();
+        let location = "/shop.php";
+        if(category)
+            location += "?category=" + category;
+        window.location.replace(location);
+    });
+
 });

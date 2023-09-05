@@ -59,7 +59,7 @@
       <section class="bar background-white">
         <div class="container text-center">
           <h1 class="h2 mb-4">NEW PRODUCTS</h1>
-          <div class="row justify-content-center products products-big">
+          <div class="row justify-content-center products products-big gx-3">
             <?php
               // Get new products (products added 5 days ago)
               $products_result = mysqli_query($conn,

@@ -67,9 +67,10 @@ class ShoppingCartItem {
 
       <div id="content">
         <div class="container">
-          <div class="row">
+          <div class="row justify-content-center">
             <div id="checkout" class="col-lg-9">
               <div class="box border-bottom-0">
+                <h2><i class="fa fa-shopping-cart"></i> Order Summary</h2>
                 <div class="table-responsive">
                   <table class="table">
                     <thead>
@@ -106,15 +107,21 @@ class ShoppingCartItem {
                         <th colspan="4">Total</th>
                         <th colspan="2">Php<?= number_format($total, 2) ?></th>
                       </tr>
+                        <tr>
+                          <td colspan="4">Shipping and Handling</td>
+                          <td colspan="2">Php<?= number_format(100.0, 2) ?></td>
+                        </tr>
+                        <tr>
+                          <th colspan="4">Total</th>
+                          <th colspan="2">Php<?= number_format($total + 100, 2) ?></th>
+                        </tr>
                     </tfoot>
                   </table>
                 </div>
               </div>
               <div class="box mt-0">
                 <form method="POST" action="save_order.php">
-                  <ul class="nav av-fill">
-                    <h2><li class="nav-item"> <i class="fa fa-map-marker"></i> Address</li></h2>
-                  </ul>
+                  <h2><i class="fa fa-map-marker"></i> Address</h2>
                   <div class="content">
 
                     <div class="form-group">
@@ -160,32 +167,6 @@ class ShoppingCartItem {
                     </div>
                   </div>
                 </form>
-              </div>
-            </div>
-            <div class="col-lg-3">
-              <div id="order-summary" class="box mb-4 p-0">
-                <div class="box-header mt-0">
-                  <h3>Order summary</h3>
-                </div>
-                <p class="text-muted">Shipping and additional costs are calculated based on the values you have entered. Taxes already included.</p>
-                <div class="table-responsive">
-                  <table class="table">
-                    <tbody>
-                      <tr>
-                        <td>Order subtotal</td>
-                        <th>Php<?= number_format($total, 2) ?></th>
-                      </tr>
-                      <tr>
-                        <td>Shipping and handling</td>
-                        <th>Php100.00</th>
-                      </tr>
-                      <tr class="total">
-                        <td>Total</td>
-                        <th>Php<?= number_format($total + 100, 2) ?></th>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
               </div>
             </div>
           </div>

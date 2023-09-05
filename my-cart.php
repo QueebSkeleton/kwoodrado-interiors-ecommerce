@@ -46,11 +46,9 @@
       </div>
       <div id="content">
         <div class="container">
-          <div class="row bar">
-            <div class="col-lg-12">
-              <p class="text-muted lead">You currently have <?= isset($_SESSION["cart"]) ? count($_SESSION["cart"]) : "0" ?> item(s) in your cart.</p>
-            </div>
+          <div class="row justify-content-center bar">
             <div id="basket" class="col-lg-9">
+              <p class="text-muted lead">You currently have <?= isset($_SESSION["cart"]) ? count($_SESSION["cart"]) : "0" ?> item(s) in your cart.</p>
               <div class="box mt-0 pb-0 no-horizontal-padding">
                 <form method="post" action="update-cart.php">
                   <div class="table-responsive">
@@ -88,8 +86,16 @@
                       </tbody>
                       <tfoot>
                         <tr>
+                          <td colspan="4">Subtotal</td>
+                          <td colspan="2">Php<?= number_format($total, 2) ?></td>
+                        </tr>
+                        <tr>
+                          <td colspan="4">Shipping and Handling</td>
+                          <td colspan="2">Php<?= number_format(100.0, 2) ?></td>
+                        </tr>
+                        <tr>
                           <th colspan="4">Total</th>
-                          <th colspan="2">Php<?= number_format($total, 2) ?></th>
+                          <th colspan="2">Php<?= number_format($total + 100, 2) ?></th>
                         </tr>
                       </tfoot>
                     </table>
@@ -102,32 +108,6 @@
                     </div>
                   </div>
                 </form>
-              </div>
-            </div>
-            <div class="col-lg-3">
-              <div id="order-summary" class="box mt-0 mb-4 p-0">
-                <div class="box-header mt-0">
-                  <h3>Order summary</h3>
-                </div>
-                <p class="text-muted">Shipping and additional costs are calculated based on the values you have entered. Taxes already included.</p>
-                <div class="table-responsive">
-                  <table class="table">
-                    <tbody>
-                      <tr>
-                        <td>Order subtotal</td>
-                        <th>Php<?= number_format($total, 2) ?></th>
-                      </tr>
-                      <tr>
-                        <td>Shipping and handling</td>
-                        <th>Php100.00</th>
-                      </tr>
-                      <tr class="total">
-                        <td>Total</td>
-                        <th>Php<?= number_format($total + 100, 2) ?></th>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
               </div>
             </div>
           </div>
