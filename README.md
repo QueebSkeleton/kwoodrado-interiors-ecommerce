@@ -66,6 +66,54 @@ Then, the instance will now run on your local machine. Endpoints are:<br>
 `localhost` - the index page of the application
 `localhost/admin/dashboard.php` - dashboard. Should redirect you to a login form when not logged in yet.
 
+## Store Pages
+
+<p float="left">
+  <img src="readme-images/1.png" alt="Preview Image 1" width="25%">
+  <img src="readme-images/2.png" alt="Preview Image 2" width="25%">
+  <img src="readme-images/3.png" alt="Preview Image 3" width="25%">
+</p>
+<p float="left">
+  <img src="readme-images/4.png" alt="Preview Image 4" width="25%">
+  <img src="readme-images/5.png" alt="Preview Image 5" width="25%">
+  <img src="readme-images/6.png" alt="Preview Image 6" width="25%">
+</p>
+<p float="left">
+  <img src="readme-images/7.png" alt="Preview Image 7" width="25%">
+  <img src="readme-images/8.png" alt="Preview Image 8" width="25%">
+  <img src="readme-images/9.png" alt="Preview Image 9" width="25%">
+</p>
+<p float="left">
+  <img src="readme-images/10.png" alt="Preview Image 10" width="25%">
+  <img src="readme-images/11.png" alt="Preview Image 11" width="25%">
+  <img src="readme-images/12.png" alt="Preview Image 12" width="25%">
+</p>
+<p float="left">
+  <img src="readme-images/13.png" alt="Preview Image 13" width="25%">
+  <img src="readme-images/14.png" alt="Preview Image 14" width="25%">
+</p>
+
+## Administrator Pages
+
+<p float="left">
+  <img src="readme-images/15.png" alt="Preview Image 15" width="25%">
+  <img src="readme-images/16.png" alt="Preview Image 16" width="25%">
+  <img src="readme-images/17.png" alt="Preview Image 17" width="25%">
+</p>
+<p float="left">
+  <img src="readme-images/18.png" alt="Preview Image 18" width="25%">
+  <img src="readme-images/19.png" alt="Preview Image 19" width="25%">
+  <img src="readme-images/20.png" alt="Preview Image 20" width="25%">
+</p>
+<p float="left">
+  <img src="readme-images/21.png" alt="Preview Image 21" width="25%">
+  <img src="readme-images/22.png" alt="Preview Image 22" width="25%">
+  <img src="readme-images/23.png" alt="Preview Image 23" width="25%">
+</p>
+<p float="left">
+  <img src="readme-images/24.png" alt="Preview Image 24" width="25%">
+</p>
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- Markdown Links & Images -->
