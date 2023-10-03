@@ -1,45 +1,46 @@
-# Kwoodrado Interiors - E-Commerce Project
+<a name="readme-top"></a>
 
-An E-Commerce Project submitted as a final requirement in CS Free Elective 2 - E-Commerce in the Computer Science
-curriculum offered by the Polytechnic University of the Philippines.
+<!-- PROJECT SHIELDS -->
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
 
-## Business Structure
+<div align="center">
+  <h3 align="center">Kwoodrado Interiors E-Commerce</h3>
+  <p align="center">
+    An E-Commerce made for selling wooden furniture.
+  </p>
+</div>
 
-Kwoodrado Interiors is an imaginary company that sells its own kinds of wooden tables and furnitures. Additionally,
-it resells some popular choices from other local brands like Urban Concepts and more.
+## About the Project
 
-| Category | Business-to-Consumer (B2C) |
-|----------|----------------------------|
-| Model    | Private/White Label        |
+Kwoodrado Interiors is an imaginary company that sells wooden furniture and
+resells select items from Urban Concepts.
 
-## E-Commerce Parts
+This website serves as an online store for the company, and to manage their
+inventory and track orders.
 
-The E-Commerce site involves two major parts:
+### Components
 
-1. **Front Store** - contains the landing page and the main store pages of the site. Typically these are the pages that the customers buy wooden furnitures from.
-1. **Administrator Dashboard** - pages that the owner interacts with to monitor everything that happens in the site.
+1. **Front Store** - contains both the landing page and the store pages of
+the website. These pages are what the customers see when they visit the
+site and buy furniture.
 
-## Technologies Used
+1. **Administrator** - pages that the owner uses to manage the website.
+Allows for E-Commerce administration tasks such as managing products,
+inventory, and order tracking. Also comes with an analytics dashboard.
 
-This project does not incorporate trending technologies. It only takes advantage of an easy-to-use stack merely for
-the sake of a final requirement.
+## Built With
 
-The E-Commerce built is **monolithic** in nature, and is a typical **web-application** that presents dynamically
-generated HyperText pages. Some dynamic pages incorporate asynchronous requests to gain the benefits of a Single-Page App,
-but the application overall isn't a SPA.
+This E-Commerce website is built with the following technologies:
 
-1. **PHP: HyperText Preprocessor** - the main backing language of the application. Used for easily creating web-applications
-that can be launched without difficulty.
-1. **MariaDB** - an open-source fork of MySQL, this is the main Relational DBMS that the application interacts with to store
-data.
-3. **000webhost** - free hosting service to be used. Supports PHP and MariaDB.
+[![PHP][PHP-shield]][PHP-docs]
+[![MariaDB][MariaDB-shield]][MariaDB-docs]
 
-## Enhanced Entity-Relationship Diagram (Relational Database Design)
+### Database Structure
 
-(Not Yet Final)
-![image](https://user-images.githubusercontent.com/57407875/118975651-d12c8e80-b9a6-11eb-942a-18d0e7341198.png)
+![DatabaseStructure](https://user-images.githubusercontent.com/57407875/118975651-d12c8e80-b9a6-11eb-942a-18d0e7341198.png)
 
-## Instructions to Install
+## Installation
 
 Install the following beforehand:
 
@@ -64,3 +65,16 @@ Place this file inside your htdocs root folder, not inside your application. It 
 Then, the instance will now run on your local machine. Endpoints are:<br>
 `localhost` - the index page of the application
 `localhost/admin/dashboard.php` - dashboard. Should redirect you to a login form when not logged in yet.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- Markdown Links & Images -->
+[stars-shield]: https://img.shields.io/github/stars/QueebSkeleton/kwoodrado-interiors-ecommerce?style=for-the-badge
+[stars-url]: https://github.com/QueebSkeleton/kwoodrado-interiors-ecommerce/stargazers
+[issues-shield]: https://img.shields.io/github/issues/QueebSkeleton/kwoodrado-interiors-ecommerce?style=for-the-badge
+[issues-url]: https://github.com/QueebSkeleton/kwoodrado-interiors-ecommerce/issues
+
+[PHP-shield]: https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white
+[PHP-docs]: https://www.php.net/
+[MariaDB-shield]: https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white
+[MariaDB-docs]: https://mariadb.org/
